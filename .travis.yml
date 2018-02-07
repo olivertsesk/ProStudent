@@ -1,12 +1,9 @@
+language: node_js
 node_js:
-   - “7”
-
-branches:
-   only:
-      - master
-
-before_script:
-   - npm install -g @angular/cli
-
+  - 6
+cache:
+  directories:
+    - node_modules
 script:
-   - ng build --prod
+  - npm run build
+  - npm test
