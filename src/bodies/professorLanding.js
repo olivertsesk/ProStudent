@@ -32,14 +32,14 @@ class ProfLanding extends Component {
     }
     render() {
         return (
-            <div style={{width:'100%',height:this.state.height-65,padding:80}}>
-                <Col lg={8} md={8} sm={8} xs={12} style={{height:'100%',padding:0,background:'white',overflowY:"scroll"}}>
+            <div style={{width:this.state.width,height:this.state.height-65,padding:this.state.width>1000?80:10}}>
+                <Col lg={8} md={8} sm={8} xs={8} style={{height:'100%',padding:0,background:'white',overflowY:"scroll"}}>
                     <ClassList/>
                     <ClassList/>
                     <ClassList/>
                 </Col>
-                <Col lg={4} md={4} sm={4} xs={12} style={{height:'100%',padding:0}}>
-                    <div className="center" style={{flexDirection:'column',height:"100%",width:(this.state.width-160)*1/3-90,marginLeft:80,}}>
+                <Col lg={4} md={4} sm={4} xs={4} style={{height:'100%',padding:0}}>
+                    <div className="center" style={{flexDirection:'column',height:"100%",width:'100%',marginLeft:this.state.width>1000?80:10}}>
                         <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
                             Manage Account
                         </div>
