@@ -1,0 +1,53 @@
+/**
+ * Class Settings --------------------------------------------------------------
+ */
+
+.mainDivStyle{
+   padding:80;
+};
+
+.settings-table {
+  margin: 50px auto;
+  padding: 50px;
+  overflow: auto;
+  width: 90%;
+
+  outline: 4px solid #3d99d4;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+
+.settings-table-header {
+  padding: 16px;
+
+  box-sizing: border-box;
+  outline: 2px solid #3d99d4;
+
+  background-color: #3d99d4;
+  color:white;
+
+  font-family: helvetica;
+  font-size: 18px;
+  text-align: center;
+}
+
+.settings-table-cell {
+  padding: 16px;
+  background-color: white;
+
+  box-sizing: border-box;
+  outline: 2px solid #3d99d4;
+
+  font-family: helvetica;
+  font-size: 18px;
+  color: #47525e;
+  text-align: center;
+}
+
+.settings-table-cell.clickable:hover {
+  background-color: #c0def1;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ */

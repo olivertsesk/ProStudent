@@ -15,6 +15,7 @@ import MainPage from './bodies/main'
 import NavigationBar from './navbar/navigationBar'
 import StudentLanding from './bodies/studentLanding'
 import ProfLanding from './bodies/professorLanding'
+import ClassSettings from './bodies/classSettings'
 
 const Redirection=()=>(
     <Redirect to={"/main"}/>
@@ -30,6 +31,7 @@ ReactDOM.render(
                 <Route exact path="/main" component={MainPage} />
                 <Route exact path="/student/*" component={StudentLanding} />
                 <Route exact path="/prof/*" component={ProfLanding}/>
+                <Route exact path="/settings/class/*" component={ClassSettings} />
                 <Route path="/*" component={Redirection} />
             </Switch>
         </Router>
