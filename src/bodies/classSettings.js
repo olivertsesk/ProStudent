@@ -1,5 +1,5 @@
 /**
- * Created by jaewonlee on 2018. 2. 9..
+ * Created by MrCerealKiller on 2018. 2. 9..
  */
 import React, { Component } from 'react';
 import{
@@ -34,10 +34,10 @@ class ClassSettings extends Component {
     }
     render() {
         return (
-            <div style={{width:'100%',height:this.state.height-65,padding:80}}>
+            <div style={{width:'100%',height:this.state.height-65,padding:80, background:'red'}}>
             </div>
         );
     }
 }
 
-export default ProfLanding;
+export default ClassSettings;

@@ -30,6 +30,15 @@ class ProfLanding extends Component {
     componentWillUnmount() {
         window.removeEventListener('resize', this.resize)
     }
+
+    handleRedirect(i){
+        switch(i){
+            case 1:
+                this.props.history.push('/settings/class/')
+                break;
+        }
+    }
+
     render() {
         return (
             <div style={{width:'100%',height:this.state.height-65,padding:80}}>
@@ -44,9 +53,9 @@ class ProfLanding extends Component {
                             Manage Account
                         </div>
                         <br style={{height:"10%",width:'90%'}}/>
-                        <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
+                        <button className="center" onClick={()=>this.handleRedirect(1)} style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
                             Manage Classes
-                        </div>
+                        </button>
                     </div>
                 </Col>
             </div>
