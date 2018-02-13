@@ -11,8 +11,6 @@ import{
 } from 'react-bootstrap'
 import ClassList from './components/listing'
 
-// import './styles/classSettings.js'
-
 class ClassSettings extends Component {
 
     constructor(props) {
