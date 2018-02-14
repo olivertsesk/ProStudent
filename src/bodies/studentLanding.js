@@ -8,7 +8,9 @@ import{
     Nav,
     NavItem,
     Col,
-    Panel
+    Panel,
+    ButtonGroup,
+    Button
 } from 'react-bootstrap'
 
 import ClassList from './components/listing'
@@ -38,6 +40,15 @@ class StudentLanding extends Component {
             <div style={{width:'100%',height:this.state.height-65,padding:80}}>
                 <Col lg={8} md={8} sm={8} xs={12} style={{height:'100%',padding:0,background:'white',overflowY:"scroll"}}>
                      <ClassList/>
+                    <h1> The comment from the other students </h1>
+                     <h2>Your comment:</h2>
+                     <input style={{width:'100%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
+                       placeholder="Leave your comment"/>
+                       <ButtonGroup>
+                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>100?this.state.width/10:this.state.width/2}}>
+                        <p style={{color:'white'}}>Enter</p>
+                    </Button>  
+                    </ButtonGroup>
                 </Col>
                 <Col lg={4} md={4} sm={4} xs={12} style={{height:'100%',padding:0}}>
                      <div className="center" style={{flexDirection:'column',height:"100%",width:(this.state.width-160)*1/3-90,marginLeft:80,}}>
