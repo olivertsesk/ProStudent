@@ -14,9 +14,6 @@ import{
 } from 'react-bootstrap'
 import CommentList from "./components/studentListing"
 
-import ClassList from './components/listing'
-import Comments from './components/listing'
-
 class StudentLanding extends Component {
     constructor(props) {
         super(props);
@@ -40,19 +37,7 @@ class StudentLanding extends Component {
         return (
             <div style={{width:'100%',height:this.state.height-65,padding:80}}>
                 <Col lg={8} md={8} sm={8} xs={12} style={{height:'100%',padding:0,background:'white',overflowY:"scroll"}}>
-<<<<<<< HEAD
-                    <CommentList/>
-                </Col>
-                <Col lg={4} md={4} sm={4} xs={12} style={{height:'100%',padding:0}}>
-                    <div className="center" style={{flexDirection:'column',height:"100%",width:(this.state.width-160)*1/3-90,marginLeft:80,}}>
-                        <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
-                            Manage Account
-                        </div>
-                        <br style={{height:"10%",width:'90%'}}/>
-                        <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
-                            Manage Classes
-=======
-                     <ClassList/>
+                     <CommentList/>
                     <h1> The comment from the other students </h1>
                      <h2>Your comment:</h2>
                      <input style={{width:'100%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
@@ -72,7 +57,6 @@ class StudentLanding extends Component {
                         <br style={{height:"10%",width:'90%'}}/>
                         <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
                             <h3>Class Description</h3>
->>>>>>> 8e6f627e37146cc1d8d56991800aef0aa06a1dfb
                         </div>
                     </div>
                 </Col>
