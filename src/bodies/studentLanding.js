@@ -11,6 +11,9 @@ import{
     Panel
 } from 'react-bootstrap'
 
+import ClassList from './components/listing'
+import Comments from './components/listing'
+
 class StudentLanding extends Component {
     constructor(props) {
         super(props);
@@ -34,7 +37,7 @@ class StudentLanding extends Component {
         return (
             <div style={{width:'100%',height:this.state.height-65,padding:80}}>
                 <Col lg={8} md={8} sm={8} xs={12} style={{height:'100%',padding:0,background:'white',overflowY:"scroll"}}>
-                     <h1>Test</h1>
+                     <ClassList/>
                 </Col>
                 <Col lg={4} md={4} sm={4} xs={12} style={{height:'100%',padding:0}}>
                      <div className="center" style={{flexDirection:'column',height:"100%",width:(this.state.width-160)*1/3-90,marginLeft:80,}}>
