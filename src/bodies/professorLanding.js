@@ -9,7 +9,7 @@ import{
     Col,
     Panel
 } from 'react-bootstrap'
-import ClassList from './components/listing'
+import ClassList from './components/courseListing'
 
 class ProfLanding extends Component {
     constructor(props) {
