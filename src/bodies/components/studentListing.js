@@ -2,6 +2,7 @@
  * Created by jaewonlee on 2018. 2. 10..
  */
 import React, { Component } from 'react';
+import { RadioGroup, RadioButton, Radio } from 'react-radio-buttons';
 import{
     Navbar,
     Nav,
@@ -25,9 +26,6 @@ class StudentListing extends Component {
     comment(){
         return(
           <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
-              <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:15}}>
-                  <p style={{width:'100%'}}>John Doe</p>
-              </Col>
               <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:15}}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum. Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
               </Col>
@@ -43,25 +41,20 @@ class StudentListing extends Component {
             <div>
                 <div style={{height:150,border:"solid",borderColor:'#343f4b'}} onClick={()=>this.setState({showPanel:!this.state.showPanel})}>
                     <Col lg={7} md={7} sm={7} xs={7} className='center' style={{height:'100%',fontSize:30}}>
-                        <p style={{width:'100%'}}>ECSE 321</p>
+                        <p style={{width:'100%'}}>ECSE 428:</p>
                     </Col>
                     <Col lg={1} md={1} sm={1} xs={1} className='center' style={{height:'100%',fontSize:30}}>
-                        [0]
-                    </Col>
-                    <Col lg={4} md={4} sm={4} xs={4} className='center' style={{height:'100%',fontSize:30}}>
-                        Unread Comments
+                        <RadioGroup name="rating" onChange={this.handleChange}>
+                            <Radio value="up" />Agree
+                            <Radio value="down" />Disagree
+                        </RadioGroup>
                     </Col>
                 </div>
                 {this.state.showPanel?
                     <Panel style={{width:'100%',height:250}}>
                         <div style={{height:50}}>
                           <Col lg={4} md={4} sm={4} xs={4}>
-                              Top Commnets
-                          </Col>
-                          <Col lg={4} md={4} sm={4} xs={4}/>
-
-                          <Col lg={4} md={4} sm={4} xs={4}>
-                            Go to class Page
+                              Top Comments
                           </Col>
                         </div>
                         <div>
