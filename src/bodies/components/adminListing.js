@@ -16,10 +16,16 @@ class AdminListing extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showPanel:false
+            showPanel:false,
+            color_blue: false
         };
         this.comment = this.comment.bind(this)
     }
+
+    changeColor(){
+        this.setState({color_blue: !this.state.color_blue})
+    }
+
 
 
     comment(){
@@ -39,9 +45,10 @@ class AdminListing extends Component {
     }
 
     render() {
+      let bgColor = this.state.color_blue ? "#3D99D4" : "white"
         return (
             <div>
-                <div style={{height:150,border:"solid",borderColor:'#343f4b'}} onClick={()=>this.setState({showPanel:!this.state.showPanel})}>
+                <div style={{height:150,border:"solid",borderColor:'#343f4b', background: bgColor}} onClick={()=>this.setState({showPanel:!this.state.showPanel}, this.changeColor.bind(this))}>
                     <Col lg={7} md={7} sm={7} xs={7} className='center' style={{height:'100%',fontSize:30}}>
                         <p style={{width:'100%'}}>ECSE 321</p>
                     </Col>
