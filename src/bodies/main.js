@@ -81,19 +81,6 @@ class Main extends Component {
                     </Button>
                 </ButtonGroup>
 
-                <p>Temp Navigation Button</p>
-                <ButtonGroup>
-                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3.3}} onClick={()=>this.handleButton(1)}>
-                        <p style={{color:'white'}}>Student</p>
-                    </Button>
-                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3.3}} onClick={()=>this.handleButton(2)}>
-                        <p style={{color:'white'}}>Professor</p>
-                    </Button>
-                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3.3}} onClick={()=>this.handleButton(3)}>
-                        <p style={{color:'white'}}>Admin</p>
-                    </Button>
-                </ButtonGroup>
-
                 <br/>
                 <br/>
                 <b>Already have an account?</b>
@@ -162,6 +149,24 @@ class Main extends Component {
                         <p style={{color:'white'}}>Cancel</p>
                     </Button>
                 </ButtonGroup>
+                {
+                    mode==1?
+                        <div>
+                            <p>Temp Navigation Button</p>
+                            <ButtonGroup>
+                                <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3.3}} onClick={()=>this.handleButton(1)}>
+                                    <p style={{color:'white'}}>Student</p>
+                                </Button>
+                                <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3.3}} onClick={()=>this.handleButton(2)}>
+                                    <p style={{color:'white'}}>Professor</p>
+                                </Button>
+                                <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3.3}} onClick={()=>this.handleButton(3)}>
+                                    <p style={{color:'white'}}>Admin</p>
+                                </Button>
+                            </ButtonGroup>
+                        </div>
+                        :null
+                }
 
             </div>
         )

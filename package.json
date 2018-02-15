@@ -1,14 +1,16 @@
 {
-  "name": "prostudent",
+  "name": "prostudent2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
-    "react-scripts": "1.1.0"
+    "react-scripts": "1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
