@@ -2,13 +2,13 @@
  * Created by jaewonlee on 2018. 2. 10..
  */
 import React, { Component } from 'react';
-import { RadioGroup, RadioButton, Radio } from 'react-radio-buttons';
 import{
     Navbar,
     Nav,
     NavItem,
     Col,
-    Panel
+    Panel,
+    Radio
 } from 'react-bootstrap'
 
 const comments = [1,2];
@@ -25,18 +25,21 @@ class StudentListing extends Component {
 
     comment(){
         return(
-          <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
-              <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:15}}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum. 
-                  Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
-              </Col>
-              <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
-                        <RadioGroup name="rating" onChange={this.handleChange}>
-                            <Radio value="up" >Agree</Radio>
-                            <Radio value="down" >Disagree</Radio>
-                        </RadioGroup>
-              </Col>
-          </div>
+            <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
+                <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:15}}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum.
+                    Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
+                </Col>
+                <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
+
+                    <img src={require('./../../image/thumbs_up.png')} style={{width:20,height:20}}/>
+                    <Radio value="up" >Agree</Radio>
+                    <div style={{width:'10%'}}/>
+
+                    <img src={require('./../../image/thumbs_down.png')} style={{width:20,height:20}}/>
+                    <Radio value="down" >Disagree</Radio>
+                </Col>
+            </div>
         )
     }
 
@@ -52,11 +55,11 @@ class StudentListing extends Component {
                     </Col>
                 </div>
                 {this.state.showPanel?
-                    <Panel style={{width:'100%',height:250}}>
+                    <Panel style={{position:'relative',width:'100%',height:250}}>
                         <div>
-                          {
-                            comments.map(()=>this.comment())
-                          }
+                            {
+                                comments.map(()=>this.comment())
+                            }
                         </div>
                     </Panel>
                     :

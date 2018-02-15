@@ -45,7 +45,8 @@
                          </div>
                          <br style={{height:"10%",width:'90%'}}/>
                          <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
-                             See Professor/'s Other Courses
+                             <p>See Professor's</p>
+                             <p>Other Courses</p>
                          </div>
                      </div>
                  </Col>
