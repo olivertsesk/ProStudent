@@ -3,9 +3,6 @@
 .idea/misc.xml
 .idea/misc.xml
 .idea/misc.xml
-<<<<<<< HEAD
-nodemodules/*
-=======
 node_modules/.cache/babel-loader/034f215fbcfd6001fe7df0fdcc6955201889fa90.json.gz
 node_modules/.cache/babel-loader/05301dff4d32d323b04df18643f13fcd4b4bcea2.json.gz
 node_modules/.cache/babel-loader/2f9bb4323de11b5cefe36e667b600c108a0b1db1.json.gz
@@ -15,4 +12,3 @@ node_modules/.cache/babel-loader/7c7344043da2878d53f54cb7ca74df74576262bd.json.g
 .idea/workspace.xml
 *.gz
 .idea/workspace.xml
->>>>>>> 26e7f80bbe7a444ed8ba876873b4371cb463321f
