@@ -27,12 +27,13 @@ class StudentListing extends Component {
         return(
           <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
               <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:15}}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum. Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum. 
+                  Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
               </Col>
-              <Col lg={1} md={1} sm={1} xs={1} className='center' style={{height:'100%',fontSize:30}}>
+              <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
                         <RadioGroup name="rating" onChange={this.handleChange}>
-                            <Radio value="up" />Agree
-                            <Radio value="down" />Disagree
+                            <Radio value="up" >Agree</Radio>
+                            <Radio value="down" >Disagree</Radio>
                         </RadioGroup>
               </Col>
           </div>
