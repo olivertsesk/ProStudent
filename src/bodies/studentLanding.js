@@ -42,12 +42,14 @@ class StudentLanding extends Component {
                     <div style={{width:'100%',padding:10}}>
                         <h2>Leave your own feedback:</h2>
                         <div style={{display:'flex',flexDirection:'row'}}>
-                            <DropdownButton title="COURSE" id="dropdown-size-large" style={{width:'100%',height:'100%'}}>
-                                <MenuItem eventKey="1">ECSE 428</MenuItem>
+                            <DropdownButton title="Tag" id="dropdown-size-large" style={{width:'100%',height:'100%'}}>
+                                <MenuItem eventKey="1">Question</MenuItem>
                                 <MenuItem divider />
-                                <MenuItem eventKey="2">ECSE 334</MenuItem>
+                                <MenuItem eventKey="2">Suggestion</MenuItem>
                                 <MenuItem divider />
-                                <MenuItem eventKey="3">ECSE 493</MenuItem>
+                                <MenuItem eventKey="3">Compliment</MenuItem>
+                                <MenuItem divider />
+                                <MenuItem eventKey="4">Complaint</MenuItem>
                             </DropdownButton>
                             <input style={{width:'100%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
                                    placeholder="Type here..."/>
@@ -60,8 +62,9 @@ class StudentLanding extends Component {
                             </ButtonGroup>
                         </div>
                     </div>
-                    <CommentList/>
-
+                    <div>
+                        <CommentList/>
+                    </div>
                 </Col>
                 <Col lg={4} md={4} sm={4} xs={12} style={{height:'100%',padding:0}}>
                     <div className="center" style={{flexDirection:'column',height:"100%",width:(this.state.width-160)*1/3-90,marginLeft:80,}}>
