@@ -9,7 +9,7 @@
     "react-radio-buttons": "^1.2.1"
   },
   "devDependencies": {
-    "react-scripts": "1.1.0"
+    "react-scripts": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
