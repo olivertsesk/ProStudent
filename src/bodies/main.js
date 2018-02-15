@@ -81,7 +81,7 @@ class Main extends Component {
                     </Button>
                 </ButtonGroup>
 
-                <p>Temp Buttons need to be substituted later implementation of logged in users</p>
+                <p>Temp Navigation Button</p>
                 <ButtonGroup>
                     <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3.3}} onClick={()=>this.handleButton(1)}>
                         <p style={{color:'white'}}>Student</p>
@@ -156,7 +156,7 @@ class Main extends Component {
                 <br/>
                 <ButtonGroup>
                     <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}}>
-                        <p style={{color:'white'}}>Sign In</p>
+                        <p style={{color:'white'}}>Submit</p>
                     </Button>
                     <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.setState({mode:0,login:{...this.state.login,password:null}})}>
                         <p style={{color:'white'}}>Cancel</p>

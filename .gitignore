@@ -3,3 +3,11 @@
 .idea/misc.xml
 .idea/misc.xml
 .idea/misc.xml
+node_modules/.cache/babel-loader/034f215fbcfd6001fe7df0fdcc6955201889fa90.json.gz
+node_modules/.cache/babel-loader/05301dff4d32d323b04df18643f13fcd4b4bcea2.json.gz
+node_modules/.cache/babel-loader/2f9bb4323de11b5cefe36e667b600c108a0b1db1.json.gz
+node_modules/.cache/babel-loader/7159dff7f10e688b7d3f079c956e82a07f1a0a6f.json.gz
+node_modules/.cache/babel-loader/7c7344043da2878d53f54cb7ca74df74576262bd.json.gz
+.idea/workspace.xml
+.idea/workspace.xml
+*.gz

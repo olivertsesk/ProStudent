@@ -40,3 +40,12 @@ body {
   justify-content:center;
   align-items:center;
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+/**
+ * Import pages
+ */
+@import './css/_classSettings.css';
