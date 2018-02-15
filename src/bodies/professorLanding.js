@@ -9,12 +9,8 @@ import{
     Col,
     Panel
 } from 'react-bootstrap'
-<<<<<<< HEAD
-import ClassList from './components/courseListing'
-=======
 import ClassList from './components/classListing'
 import ClassManager from './classSettings'
->>>>>>> 26e7f80bbe7a444ed8ba876873b4371cb463321f
 
 class ProfLanding extends Component {
     constructor(props) {

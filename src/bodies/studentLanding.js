@@ -67,11 +67,7 @@ class StudentLanding extends Component {
                             <ButtonGroup>
                                 <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>100?this.state.width/10:this.state.width/2}}>
                                     <p style={{color:'white'}}>Enter</p>
-                                </Button>
                             </ButtonGroup>
-                        </div>
-                    </div>
-                    <CommentList/>
 
 >>>>>>> 26e7f80bbe7a444ed8ba876873b4371cb463321f
                 </Col>
