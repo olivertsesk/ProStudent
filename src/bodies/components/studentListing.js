@@ -52,11 +52,6 @@ class StudentListing extends Component {
                 </div>
                 {this.state.showPanel?
                     <Panel style={{width:'100%',height:250}}>
-                        <div style={{height:50}}>
-                          <Col lg={4} md={4} sm={4} xs={4}>
-                              Top Comments
-                          </Col>
-                        </div>
                         <div>
                           {
                             comments.map(()=>this.comment())
