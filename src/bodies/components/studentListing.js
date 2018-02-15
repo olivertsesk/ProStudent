@@ -51,7 +51,7 @@ class StudentListing extends Component {
                         <p style={{width:'100%'}}>ECSE 428:</p>
                     </Col>
                     <Col lg={5} md={5} sm={5} xs={5} className='center' style={{height:'100%',fontSize:20}}>
-                        <p style={{width:'100%'}}>Student Feedback</p>
+                        <p style={{width:'100%'}}>Lecture 1 (1/8/2018)</p>
                     </Col>
                 </div>
                 {this.state.showPanel?
