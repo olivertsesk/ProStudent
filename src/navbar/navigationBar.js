@@ -58,7 +58,12 @@ class NavigationBar extends Component {
                             </NavItem>
                             {
                                 firebase.auth().currentUser?
-                                    <NavItem eventKey={2} href="#" onClick={()=>this.setState({about:false,contactus:true})} onClick={()=>firebaseFunctions.logout()}>
+                                    <NavItem eventKey={2} href="#" onClick={()=>this.setState({about:false,contactus:true})} onClick={()=>{
+                                        var r = window.confirm("Are you sure?")
+                                        if(r){
+                                            firebaseFunctions.logout()
+                                        }
+                                    }}>
                                         <p style={{color:"black", fontWeight:"bold"}}>Logout</p>
                                     </NavItem>
                                     :

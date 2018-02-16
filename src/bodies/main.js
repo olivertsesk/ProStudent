@@ -19,10 +19,11 @@ class Main extends Component {
             height:window.innerHeight,
             width:window.innerWidth,
             mode:0,
+            createAccount:false,
             login:{
-                email:null,
-                password:null,
-                employeeNo:null,
+                email:"",
+                password:"",
+                employeeNo:"",
             }
         };
         this.main = this.main.bind(this)
@@ -169,6 +170,12 @@ class Main extends Component {
                         <p style={{color:'white'}}>Cancel</p>
                     </Button>
                 </ButtonGroup>
+                    {this.state.mode==3?
+                        <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.setState({createAccount:true})}>
+                            <p style={{color:'white'}}>Create Account</p>
+                        </Button>
+                        :
+                        null}
             </div>
             )
     }
@@ -176,12 +183,16 @@ class Main extends Component {
     createID(type) {
         firebase.auth().createUserWithEmailAndPassword(this.state.login.email, this.state.login.password).then(()=>{
             alert('CREATED');
-        }).catch(()=>{
-            alert('TRY AGAIN')
+        }).catch((err)=>{
+            alert(err)
         })
     }
 
     login(){
+        if(this.state.login.email.length<1){
+            alert("Please Create Account")
+            return;
+        }
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
             firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).then(()=>{
                 alert("LOGGED IN")
@@ -205,41 +216,49 @@ class Main extends Component {
         }else if (this.state.mode === 3){
             return(
                 <div className="App">
-                    {JSON.stringify(firebase.auth().currentUser)}
-                    <Panel style={{position:'absolute',
-                        top:this.state.height/8,
-                        left:this.state.width>1000?3*this.state.width/20:this.state.width/8,
-                        width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
-                        height:this.state.width>1000?this.state.height*3/4:this.state.height*6/8
-                    }}>
-                        {this.panel(this.state.mode)}
-                    </Panel>
-                    <Panel style={{position:'absolute',
-                        top:this.state.height/8,
-                        left:this.state.width>1000?13*this.state.width/24:6*this.state.width/8,
-                        width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
-                        height:this.state.width>1000?this.state.height*3/4:this.state.height*6/8
-                    }}>
-                    <div className="center" style={{flexDirection:'column',width:'100%',height:'100%'}}>
-                        <p style={{color:"#3D99d4",fontSize:25}}>Create Professor Account</p>
-                        <hr style={{color:"#B3b3b3",border:'solid',width:'90%',borderWidth:0.5}}/>
-                        <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Email</p>
-                        <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                            onChange={(e)=> this.setState({login:{...this.state.login,email:e.target.value}})}
-                        />
-                        <br/>
-                        <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Password</p>
-                        <input type='password' style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                           onChange={(e)=> this.setState({login:{...this.state.login,password:e.target.value}})}
-                        />
-                        <br/>
-                        <ButtonGroup>
-                            <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.createID()}>
-                                <p style={{color:'white'}}>Create Account</p>
-                            </Button>
-                        </ButtonGroup>
-                    </div>
-                    </Panel>
+                    {!this.state.createAccount?
+                        <Panel style={{position:'absolute',
+                            top:this.state.height/8,
+                            left:this.state.width>1000?this.state.width/3:this.state.width/8,
+                            width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
+                            height:this.state.width>1000?this.state.height*3/4:this.state.height*6/8
+                        }}>
+                            {this.panel(this.state.mode)}
+                        </Panel>
+                    :
+                        <Panel style={{position:'absolute',
+                            top:this.state.height/8,
+                            left:this.state.width>1000?this.state.width/3:this.state.width/8,
+                            width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
+                            height:this.state.width>1000?this.state.height*3/4:this.state.height*6/8
+                        }}>
+                            <div className="center" style={{flexDirection:'column',width:'100%',height:'100%'}}>
+                                <p style={{color:"#3D99d4",fontSize:25}}>Create Professor Account</p>
+                                <hr style={{color:"#B3b3b3",border:'solid',width:'90%',borderWidth:0.5}}/>
+                                <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Email</p>
+                                <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
+                                       onChange={(e)=> this.setState({login:{...this.state.login,email:e.target.value}})}
+                                />
+                                <br/>
+                                <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Password</p>
+                                <input type='password' style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
+                                       onChange={(e)=> this.setState({login:{...this.state.login,password:e.target.value}})}
+                                />
+                                <br/>
+                                <ButtonGroup>
+                                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.createID()}>
+                                        <p style={{color:'white'}}>Create Account</p>
+                                    </Button>
+                                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.setState({createAccount:false})}>
+                                        <p style={{color:'white'}}>Cancel</p>
+                                    </Button>
+                                </ButtonGroup>
+
+                            </div>
+                        </Panel>
+                    }
+
+
                 </div>
                 )
         }else{
