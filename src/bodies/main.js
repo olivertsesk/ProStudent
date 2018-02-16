@@ -8,6 +8,8 @@ import{
     ButtonGroup,
     Button
 } from 'react-bootstrap'
+import * as firebase from 'firebase'
+
 
 class Main extends Component {
 
@@ -25,11 +27,37 @@ class Main extends Component {
         };
         this.main = this.main.bind(this)
         this.panel = this.panel.bind(this)
+        this.createID = this.createID.bind(this)
     }
     resize = () => {
         this.setState({width:window.innerWidth,height:window.innerHeight})
     }
+    componentWillMount(){
+        firebase.auth().onAuthStateChanged((user)=>{
+            if(user) {
+                if(!firebase.auth().currentUser.displayName){
+                    firebase.auth().currentUser.updateProfile({
+                        displayName:user.email
+                    }).then(()=>{
 
+                    }).catch(function(error){
+                        //error in changing displayname
+                    })
+
+                }
+            }
+            firebase.database().ref(/users/+firebase.auth().currentUser.uid).once('value').then((snapshot)=>{
+                // user type  0 = admin
+                if(snapshot.val()!=0){
+                    this.props.history.push(/prof/)
+                }
+                else{
+                    this.props.history.push(/admin/)
+                }
+            })
+        });
+
+    }
     componentDidMount() {
         window.addEventListener('resize', this.resize)
     }
@@ -140,6 +168,14 @@ class Main extends Component {
             )
     }
 
+    createID(type) {
+        firebase.auth().createUserWithEmailAndPassword(this.state.login.email, this.state.login.password).then(()=>{
+            alert('CREATED');
+        }).catch(()=>{
+            alert('TRY AGAIN')
+        })
+    }
+
     render() {
         if(this.state.mode==2||this.state.mode===4){
             return (
@@ -179,12 +215,12 @@ class Main extends Component {
                         />
                         <br/>
                         <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Password</p>
-                        <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
+                        <input type='password' style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
                            onChange={(e)=> this.setState({login:{...this.state.login,password:e.target.value}})}
                         />
                         <br/>
                         <ButtonGroup>
-                            <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}}>
+                            <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.createID()}>
                                 <p style={{color:'white'}}>Create Account</p>
                             </Button>
                         </ButtonGroup>
