@@ -55,13 +55,13 @@ class Main extends Component {
 
     main(){
         return(
-            <div style={{zIndex:1,width:this.state.width,padding:10}}>
+            <div class='App' style={{zIndex:1,width:this.state.width,padding:10}}>
                 <div style={{height:this.state.height/3,justifyContent:'center'}}>
-                    <h1 style={{fontSize:this.state.width>1000?this.state.width/20:50,fontWeight:900,color:"#47525e"}}>ProStudent</h1>
-                    <h2 style={{fontSize:this.state.width>1000?this.state.width/80:18,fontWeight:600,fontStyle:'italic',color:"#47525e",padding:0,margin:0,lineHeight:1.3}}>
+                    <h1 style={{fontSize:this.state.width>1000?this.state.width/12:50,fontWeight:900,color:"#47525e"}}>ProStudent</h1>
+                    <h2 style={{fontSize:this.state.width>1000?this.state.width/60:18,fontWeight:600,fontStyle:'italic',color:"#47525e",padding:0,margin:0,lineHeight:1.3}}>
                         Direct communication between a class & its Prof!
                     </h2>
-                    <h3 style={{fontSize:this.state.width>1000?this.state.width/80:18,fontWeight:500,fontStyle:'italic',color:"#47525e",padding:0,margin:0}}>
+                    <h3 style={{fontSize:this.state.width>1000?this.state.width/70:18,fontWeight:500,fontStyle:'italic',color:"#47525e",padding:0,margin:0}}>
                         Real-time feedback & consensus evaluation
                     </h3>
                 </div>
