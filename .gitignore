@@ -3,11 +3,10 @@
 .idea/misc.xml
 .idea/misc.xml
 .idea/misc.xml
-node_modules/*
+node_modules/
 .idea/workspace.xml
 .idea/workspace.xml
 *.gz
 .idea/workspace.xml
-/node_modules/*
 *.xml
 
