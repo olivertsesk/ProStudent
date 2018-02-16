@@ -32,12 +32,13 @@ class StudentListing extends Component {
                 </Col>
                 <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
 
-                    <img src={require('./../../image/thumbs_up.png')} style={{width:20,height:20}}/>
-                    <Radio value="up" >Agree</Radio>
+                    <Radio value="up" onClick={()=>this.setState({up:true,down:false})}>
+                        <img src={require('./../../image/thumbs_up.png')} style={{width:40,height:40}}/>
+                    </Radio>
                     <div style={{width:'10%'}}/>
-
-                    <img src={require('./../../image/thumbs_down.png')} style={{width:20,height:20}}/>
-                    <Radio value="down" >Disagree</Radio>
+                    <Radio value="down">
+                        <img src={require('./../../image/thumbs_down.png')} style={{width:40,height:40}}/>
+                    </Radio>
                 </Col>
             </div>
         )
