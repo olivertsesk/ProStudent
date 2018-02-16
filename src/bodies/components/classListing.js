@@ -32,14 +32,11 @@ class StudentLanding extends Component {
     comment(){
         return(
             <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
-                <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:15}}>
-                    <p style={{width:'100%'}}>John Doe</p>
-                </Col>
-                <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:15}}>
+                <Col lg={8} md={8} sm={8} xs={8} className='center' style={{height:'100%',fontSize:15}}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum. Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
                 </Col>
-                <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:15}}>
-                    Up and Down
+                <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:30}}>
+                    Rating: 0
                 </Col>
             </div>
         )
@@ -62,16 +59,6 @@ class StudentLanding extends Component {
                 </div>
                 {this.state.showPanel?
                     <Panel style={{width:'100%',height:250}}>
-                        <div style={{height:50}}>
-                            <Col lg={4} md={4} sm={4} xs={4}>
-                                Top Commnets
-                            </Col>
-                            <Col lg={4} md={4} sm={4} xs={4}/>
-
-                            <Col lg={4} md={4} sm={4} xs={4}>
-                                Go to class Page
-                            </Col>
-                        </div>
                         <div>
                             {
                                 comments.map(()=>this.comment())

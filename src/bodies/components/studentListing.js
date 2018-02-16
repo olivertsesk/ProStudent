@@ -24,20 +24,28 @@ class StudentListing extends Component {
 
 
     comment(){
+        var up = 6;
+        var down = 2;
         return(
             <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
                 <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:15}}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum.
                     Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
                 </Col>
-                <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
+                <Col lg={4} md={4} sm={4} xs={4} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
 
-                    <img src={require('./../../image/thumbs_up.png')} style={{width:20,height:20}}/>
-                    <Radio value="up" >Agree</Radio>
+                    <Radio value="up" onClick={()=>{up++}}>
+                        <img src={require('./../../image/thumbs_up.png')} style={{width:40,height:40}}/>
+                        <p>[{up}]</p>
+                    </Radio>
                     <div style={{width:'10%'}}/>
-
-                    <img src={require('./../../image/thumbs_down.png')} style={{width:20,height:20}}/>
-                    <Radio value="down" >Disagree</Radio>
+                    <Radio value="down" onClick={()=>{down++}}>
+                        <img src={require('./../../image/thumbs_down.png')} style={{width:40,height:40}}/>
+                        <p>[{down}]</p>
+                    </Radio>
+                </Col>
+                <Col lg={1} md={1} sm={1} xs={1} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
+                    <p>Rating:{up-down}</p>
                 </Col>
             </div>
         )
