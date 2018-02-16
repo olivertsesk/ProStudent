@@ -13,6 +13,6 @@ var config = {
     messagingSenderId: "450933773094"
 };
 
-const init=()=>{
+export const init=()=>{
         firebase.initializeApp(config);
 }

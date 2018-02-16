@@ -8,3 +8,4 @@ node_modules/*
 .idea/workspace.xml
 *.gz
 .idea/workspace.xml
+*.xml
