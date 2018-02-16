@@ -11,6 +11,9 @@ import{
     Panel
 } from 'react-bootstrap'
 
+import * as firebase from 'firebase'
+import * as firebaseFunctions from './../firebase'
+
 class NavigationBar extends Component {
     constructor(props) {
         super(props);
@@ -19,12 +22,16 @@ class NavigationBar extends Component {
             width:window.innerWidth
         };
     }
+
     resize = () => {
         this.setState({width:window.innerWidth,height:window.innerHeight})
     }
 
     componentDidMount() {
         window.addEventListener('resize', this.resize)
+        firebase.auth().onAuthStateChanged((user)=>{
+            this.setState({changeState:!this.state.changeState})
+        });
     }
 
     componentWillUnmount() {
@@ -49,6 +56,14 @@ class NavigationBar extends Component {
                             <NavItem eventKey={2} href="#" onClick={()=>this.setState({about:false,contactus:true})}>
                                 <p style={{color:"black", fontWeight:"bold"}}>Contact Us</p>
                             </NavItem>
+                            {
+                                firebase.auth().currentUser?
+                                    <NavItem eventKey={2} href="#" onClick={()=>this.setState({about:false,contactus:true})} onClick={()=>firebaseFunctions.logout()}>
+                                        <p style={{color:"black", fontWeight:"bold"}}>Logout</p>
+                                    </NavItem>
+                                    :
+                                        null
+                            }
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

@@ -28,6 +28,7 @@ class Main extends Component {
         this.main = this.main.bind(this)
         this.panel = this.panel.bind(this)
         this.createID = this.createID.bind(this)
+        this.login = this.login.bind(this)
     }
     resize = () => {
         this.setState({width:window.innerWidth,height:window.innerHeight})
@@ -43,18 +44,20 @@ class Main extends Component {
                     }).catch(function(error){
                         //error in changing displayname
                     })
-
                 }
+                firebase.database().ref(/users/+firebase.auth().currentUser.uid).once('value').then((snapshot)=>{
+                    // user type  0 = admin
+                    if(snapshot.val()!=0){
+                        this.props.history.push('/prof/')
+                    }
+                    else{
+                        this.props.history.push('/admin/')
+                    }
+                })
             }
-            firebase.database().ref(/users/+firebase.auth().currentUser.uid).once('value').then((snapshot)=>{
-                // user type  0 = admin
-                if(snapshot.val()!=0){
-                    this.props.history.push(/prof/)
-                }
-                else{
-                    this.props.history.push(/admin/)
-                }
-            })
+            else{
+                this.props.history.push('/main');
+            }
         });
 
     }
@@ -72,7 +75,9 @@ class Main extends Component {
                 this.props.history.push('/student/')
                 break;
             case 3:
-                this.props.history.push('/prof/')
+                if(this.login()){
+                    this.props.history.push('/prof/')
+                }
                 break;
             case 4:
                 this.props.history.push('/admin/')
@@ -137,7 +142,7 @@ class Main extends Component {
                 topInput = "Username"
                 bottomInput = "Password"
                 break;
-            defaul:
+            default:
                 break;
         }
 
@@ -151,7 +156,7 @@ class Main extends Component {
                     />
                     <br/>
                     <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>{bottomInput}</p>
-                    <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
+                    <input type='password' style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
                        onChange={(e)=> this.setState({login:{...this.state.login,password:e.target.value}})}
                     />
                     <br/>
@@ -176,6 +181,14 @@ class Main extends Component {
         })
     }
 
+    login(){
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
+            firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).then(()=>{
+                alert("LOGGED IN")
+            }).catch(()=>alert("FAILED"))
+        ).catch(()=>alert("FAILED"))
+    }
+
     render() {
         if(this.state.mode==2||this.state.mode===4){
             return (
@@ -192,6 +205,7 @@ class Main extends Component {
         }else if (this.state.mode === 3){
             return(
                 <div className="App">
+                    {JSON.stringify(firebase.auth().currentUser)}
                     <Panel style={{position:'absolute',
                         top:this.state.height/8,
                         left:this.state.width>1000?3*this.state.width/20:this.state.width/8,

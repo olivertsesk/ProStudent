@@ -16,3 +16,9 @@ var config = {
 export const init=()=>{
         firebase.initializeApp(config);
 }
+
+export const logout =()=>{
+    firebase.auth().signOut().then(function(){
+        alert("Logged out");
+    })
+}
