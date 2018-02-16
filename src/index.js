@@ -10,6 +10,8 @@ import {
     Switch
 } from 'react-router-dom';
 
+import * as firebaseFunction from './firebase.js'
+
 //bodies
 import MainPage from './bodies/main'
 import NavigationBar from './navbar/navigationBar'
@@ -20,6 +22,7 @@ import AdminLanding from './bodies/adminLanding'
 const Redirection=()=>(
     <Redirect to={"/main"}/>
 );
+
 
 //<Route path="/app/*" component={MainPage}/>
 
