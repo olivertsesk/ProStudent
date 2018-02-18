@@ -181,16 +181,41 @@ class Main extends Component {
         })
     }
 
+<<<<<<< Updated upstream
     login(){
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
             firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).then(()=>{
                 alert("LOGGED IN")
             }).catch(()=>alert("FAILED"))
         ).catch(()=>alert("FAILED"))
+=======
+    adminLogin(type) {
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
+          if(this.state.login.email == "admin@prostudent.ca" && this.state.login.password == "password"){
+                firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).then(()=>{
+                    alert("LOGGED IN")
+                }
+          } else {
+                alert("FAILED")
+          }).catch(()=>alert("FAILED"))
+        ).catch(()=>alert("FAILED"))
+>>>>>>> Stashed changes
     }
 
     render() {
-        if(this.state.mode==2||this.state.mode===4){
+        if(this.state.mode==2){
+            return (
+                <div className="App">
+                        <Panel style={{position:'absolute',
+                            top:this.state.height/8,
+                            left:this.state.width>1000?this.state.width/3:this.state.width/8,
+                            width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
+                            height:this.state.width>1000?this.state.height*3/4:this.state.height*6/8
+                        }}>
+                            {this.panel(this.state.mode)}
+                        </Panel>
+                </div>)
+        }else if(this.state.mode==4){
             return (
                 <div className="App">
                         <Panel style={{position:'absolute',
@@ -248,4 +273,3 @@ class Main extends Component {
     }
 }
 export default Main
-
