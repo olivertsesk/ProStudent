@@ -19,6 +19,5 @@ export const init=()=>{
 
 export const logout =()=>{
     firebase.auth().signOut().then(function(){
-        alert("Logged out");
-    })
+    }).catch(()=>alert("Failed"))
 }
