@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 
 import * as firebaseFunctions from './firebase'
+import * as adminSDK from './admin'
 
 //bodies
 import MainPage from './bodies/main'
@@ -24,6 +25,7 @@ const Redirection=()=>(
 );
 
 firebaseFunctions.init();
+adminSDK.init();
 
 //<Route path="/app/*" component={MainPage}/>
 

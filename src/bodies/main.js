@@ -188,7 +188,6 @@ class Main extends Component {
         })
     }
 
-<<<<<<< Updated upstream
     login(){
         if(this.state.login.email.length<1){
             alert("Please Create Account")
@@ -199,18 +198,17 @@ class Main extends Component {
                 alert("LOGGED IN")
             }).catch(()=>alert("FAILED"))
         ).catch(()=>alert("FAILED"))
-=======
+    }
     adminLogin(type) {
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
-          if(this.state.login.email == "admin@prostudent.ca" && this.state.login.password == "password"){
-                firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).then(()=>{
-                    alert("LOGGED IN")
-                }
-          } else {
-                alert("FAILED")
-          }).catch(()=>alert("FAILED"))
-        ).catch(()=>alert("FAILED"))
->>>>>>> Stashed changes
+        // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
+        //     if(this.state.login.email == "admin@prostudent.ca" && this.state.login.password == "password"){
+        //           firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).then(()=>{
+        //               alert("LOGGED IN")
+        //           }).catch((=>alert("FAILED")))
+        //     } else {
+        //           alert("FAILED")
+        //     }
+        // ).catch(()=>alert("FAILED"))
     }
 
     render() {
