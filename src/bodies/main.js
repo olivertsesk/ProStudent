@@ -9,6 +9,7 @@ import{
     Button
 } from 'react-bootstrap'
 import * as firebase from 'firebase'
+import * as firebaseFunctions from './../firebase'
 
 
 class Main extends Component {
@@ -20,10 +21,15 @@ class Main extends Component {
             width:window.innerWidth,
             mode:0,
             createAccount:false,
+            newAccount: false,
             login:{
                 email:"",
                 password:"",
                 employeeNo:"",
+            },
+            newUser:{
+                firstName:"",
+                lastName:"",
             }
         };
         this.main = this.main.bind(this)
@@ -34,30 +40,40 @@ class Main extends Component {
     resize = () => {
         this.setState({width:window.innerWidth,height:window.innerHeight})
     }
+
     componentWillMount(){
         firebase.auth().onAuthStateChanged((user)=>{
             if(user) {
                 if(!firebase.auth().currentUser.displayName){
-                    firebase.auth().currentUser.updateProfile({
-                        displayName:user.email
-                    }).then(()=>{
+                    var name = "";
+                    if(this.state.newAccount){
+                        alert(this.state.newUser.firstName);
+                        alert(this.state.newUser.lastName);
+                        name = "Professor " + this.state.newUser.firstName + " " + this.state.newUser.lastName;
+                    }else{
+                        name = firebase.auth().currentUser.email;
+                    }
 
+                    firebase.auth().currentUser.updateProfile({
+                        displayName: name
+                    }).then(()=>{
+                        alert(name)
                     }).catch(function(error){
                         //error in changing displayname
                     })
                 }
-                firebase.database().ref(/users/+firebase.auth().currentUser.uid).once('value').then((snapshot)=>{
-                    // user type  0 = admin
-                    if(snapshot.val()!=0){
-                        this.props.history.push('/prof/')
-                    }
-                    else{
-                        this.props.history.push('/admin/')
-                    }
-                })
+
+                const adminID = "stpX94g415buRPBTRLCl9jKnbbU2"
+                if(adminID == firebase.auth().currentUser.uid){
+                    this.props.history.push('/admin/');
+                }
+                else{
+                    this.props.history.push('/prof/');
+                }
             }
             else{
                 this.props.history.push('/main');
+                this.main();
             }
         });
 
@@ -71,19 +87,10 @@ class Main extends Component {
     }
 
     handleButton(i){
-        switch(i){
-            case 2:
-                this.props.history.push('/student/')
-                break;
-            case 3:
-                if(this.login()){
-                    this.props.history.push('/prof/')
-                }
-                break;
-            case 4:
-                this.props.history.push('/admin/')
-                break;
+        if(this.state.mode === 2){
+            this.props.history.push('/student/');
         }
+        this.login();
     }
 
 
@@ -170,34 +177,37 @@ class Main extends Component {
                         <p style={{color:'white'}}>Cancel</p>
                     </Button>
                 </ButtonGroup>
-                    {this.state.mode==3?
-                        <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.setState({createAccount:true})}>
+                <br/>
+                {this.state.mode==3?
+                        <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?2*this.state.width/7:2*this.state.width/3}} onClick={()=>this.setState({createAccount:true})}>
                             <p style={{color:'white'}}>Create Account</p>
                         </Button>
                         :
-                        null}
+                        null
+                }
             </div>
             )
     }
 
     createID(type) {
-        firebase.auth().createUserWithEmailAndPassword(this.state.login.email, this.state.login.password).then(()=>{
-            alert('CREATED');
-        }).catch((err)=>{
-            alert(err)
-        })
-    }
+            firebase.auth().createUserWithEmailAndPassword(this.state.login.email, this.state.login.password).then(()=>{
+                alert('Your account has been created');
+                this.state.newAccount = true;
+            }).catch(function(error){
+                alert(error);
+            });
+        }
 
     login(){
         if(this.state.login.email.length<1){
-            alert("Please Create Account")
+            alert("Please enter your account information or create an account")
             return;
         }
+
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
-            firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).then(()=>{
-                alert("LOGGED IN")
-            }).catch(()=>alert("FAILED"))
-        ).catch(()=>alert("FAILED"))
+            firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).catch(()=>alert("FAILED"))
+        ).catch(()=>alert("FAILED"));
+
     }
 
     render() {
@@ -235,6 +245,16 @@ class Main extends Component {
                             <div className="center" style={{flexDirection:'column',width:'100%',height:'100%'}}>
                                 <p style={{color:"#3D99d4",fontSize:25}}>Create Professor Account</p>
                                 <hr style={{color:"#B3b3b3",border:'solid',width:'90%',borderWidth:0.5}}/>
+                                <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>First Name</p>
+                                <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
+                                       onChange={(e)=> this.setState({newUser:{...this.state.firstName,firstName:e.target.value}})}
+                                />
+                                <br/>
+                                <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Last Name</p>
+                                <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
+                                       onChange={(e)=> this.setState({newUser:{...this.state.lastName,lastName:e.target.value}})}
+                                />
+                                <br/>
                                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Email</p>
                                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
                                        onChange={(e)=> this.setState({login:{...this.state.login,email:e.target.value}})}

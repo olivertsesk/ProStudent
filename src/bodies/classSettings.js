@@ -99,11 +99,12 @@ class ClassSettings extends Component {
             <tbody style={{width:'100%'}}>
                 <tr className="settings-table-row">
                     <td className="settings-table-cell" style={{width:'90%'}}>ECSE 428</td>
+                    <td className="settings-table-cell clickable" onClick={()=>this.openPortal()}>Open Portal</td>
                     <td className="settings-table-cell clickable" onClick={()=>this.setState({mode:2})}>Edit</td>
                     <td className="settings-table-cell clickable" onClick={()=>this.setState({mode:3})}>Delete</td>
                 </tr>
                 <tr className="settings-table-row">
-                    <td className="settings-table-cell clickable" colspan="3"  onClick={()=>this.setState({mode:1})}>Add Class</td>
+                    <td className="settings-table-cell clickable" colspan="4"  onClick={()=>this.setState({mode:1})}>Add Class</td>
                 </tr>
             </tbody>
         )
@@ -140,6 +141,11 @@ class ClassSettings extends Component {
 
         );
     }
+
+    openPortal(){
+        alert("Portal Access Code: ncx84732r78r");
+    }
 }
+
 
 export default ClassSettings;
