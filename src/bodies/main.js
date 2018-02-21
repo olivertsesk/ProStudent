@@ -21,6 +21,7 @@ class Main extends Component {
             width:window.innerWidth,
             mode:0,
             createAccount:false,
+            newAccount: false,
             login:{
                 email:"",
                 password:"",
@@ -44,10 +45,19 @@ class Main extends Component {
         firebase.auth().onAuthStateChanged((user)=>{
             if(user) {
                 if(!firebase.auth().currentUser.displayName){
-                    firebase.auth().currentUser.updateProfile({
-                        displayName:user.email
-                    }).then(()=>{
+                    var name = "";
+                    if(this.state.newAccount){
+                        alert(this.state.newUser.firstName);
+                        alert(this.state.newUser.lastName);
+                        name = "Professor " + this.state.newUser.firstName + " " + this.state.newUser.lastName;
+                    }else{
+                        name = firebase.auth().currentUser.email;
+                    }
 
+                    firebase.auth().currentUser.updateProfile({
+                        displayName: name
+                    }).then(()=>{
+                        alert(name)
                     }).catch(function(error){
                         //error in changing displayname
                     })
@@ -180,9 +190,9 @@ class Main extends Component {
     }
 
     createID(type) {
-
             firebase.auth().createUserWithEmailAndPassword(this.state.login.email, this.state.login.password).then(()=>{
                 alert('Your account has been created');
+                this.state.newAccount = true;
             }).catch(function(error){
                 alert(error);
             });
@@ -242,7 +252,7 @@ class Main extends Component {
                                 <br/>
                                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Last Name</p>
                                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                                       onChange={(e)=> this.setState({newUSer:{...this.state.lastName,lastName:e.target.value}})}
+                                       onChange={(e)=> this.setState({newUser:{...this.state.lastName,lastName:e.target.value}})}
                                 />
                                 <br/>
                                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Email</p>
