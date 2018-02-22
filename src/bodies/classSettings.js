@@ -142,7 +142,7 @@ class ClassSettings extends Component {
                         top:this.state.height/8,
                         left:this.state.width>1000?this.state.width/3:this.state.width/8,
                         width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
-                        height:this.state.width>1000?this.state.height*3/4:this.state.height*6/8
+                        height:this.state.width>1000?this.state.height*7/8:this.state.height*13/16
                     }}>
                         {this.panel(this.state.mode)}
                     </Panel>
