@@ -47,8 +47,6 @@ class Main extends Component {
                 if(!firebase.auth().currentUser.displayName){
                     var name = "";
                     if(this.state.newAccount){
-                        alert(this.state.newUser.firstName);
-                        alert(this.state.newUser.lastName);
                         name = "Professor " + this.state.newUser.firstName + " " + this.state.newUser.lastName;
                     }else{
                         name = firebase.auth().currentUser.email;
@@ -205,8 +203,8 @@ class Main extends Component {
         }
 
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
-            firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).catch(()=>alert("FAILED"))
-        ).catch(()=>alert("FAILED"));
+            firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).catch((error)=>alert(error +"... Try loggin in again!"))
+        ).catch((error)=>alert(error +"... Try loggin in again!"));
 
     }
 
