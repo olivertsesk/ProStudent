@@ -46,8 +46,11 @@ class Main extends Component {
                 if(!firebase.auth().currentUser.displayName){
                     var name = "";
                     if(this.state.newAccount){
+<<<<<<< HEAD
                         //alert(this.state.newUser.firstName);
                         //alert(this.state.newUser.lastName);
+=======
+>>>>>>> 702f71251dc05dc82a81011ccef4b79d735edb1a
                         name = "Professor " + this.state.newUser.firstName + " " + this.state.newUser.lastName;
                     }else{
                         name = firebase.auth().currentUser.email;
@@ -231,8 +234,8 @@ class Main extends Component {
         }
 
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
-            firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).catch(()=>alert("FAILED"))
-        ).catch(()=>alert("FAILED"));
+            firebase.auth().signInWithEmailAndPassword(this.state.login.email,this.state.login.password).catch((error)=>alert(error +"... Try loggin in again!"))
+        ).catch((error)=>alert(error +"... Try loggin in again!"));
 
     }
 
@@ -244,7 +247,7 @@ class Main extends Component {
                             top:this.state.height/8,
                             left:this.state.width>1000?this.state.width/3:this.state.width/8,
                             width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
-                            height:this.state.width>1000?this.state.height*3/4:this.state.height*6/8
+                            height:this.state.width>1000?this.state.height*7/8:this.state.height*13/16
                         }}>
                             {this.panel(this.state.mode)}
                         </Panel>
@@ -257,7 +260,7 @@ class Main extends Component {
                             top:this.state.height/8,
                             left:this.state.width>1000?this.state.width/3:this.state.width/8,
                             width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
-                            height:this.state.width>1000?this.state.height*3/4:this.state.height*6/8
+                            height:this.state.width>1000?this.state.height*7/8:this.state.height*13/16
                         }}>
                             {this.panel(this.state.mode)}
                         </Panel>
@@ -266,7 +269,7 @@ class Main extends Component {
                             top:this.state.height/8,
                             left:this.state.width>1000?this.state.width/3:this.state.width/8,
                             width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
-                            height:this.state.width>1000?this.state.height*3/4:this.state.height*6/8
+                            height:this.state.width>1000?this.state.height*7/8:this.state.height*13/16
                         }}>
                             <div className="center" style={{flexDirection:'column',width:'100%',height:'100%'}}>
                                 <p style={{color:"#3D99d4",fontSize:25}}>Create Professor Account</p>
