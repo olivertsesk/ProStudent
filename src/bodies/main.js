@@ -46,11 +46,9 @@ class Main extends Component {
                 if(!firebase.auth().currentUser.displayName){
                     var name = "";
                     if(this.state.newAccount){
-<<<<<<< HEAD
                         //alert(this.state.newUser.firstName);
                         //alert(this.state.newUser.lastName);
-=======
->>>>>>> 702f71251dc05dc82a81011ccef4b79d735edb1a
+
                         name = "Professor " + this.state.newUser.firstName + " " + this.state.newUser.lastName;
                     }else{
                         name = firebase.auth().currentUser.email;

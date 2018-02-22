@@ -85,14 +85,11 @@ class ClassSettings extends Component {
             else{
                 alert("Session with Same course code exists")
             }
-<<<<<<< HEAD
-=======
         }).then(()=>{
             alert("Course Created");
             this.setState({mode:0});
         }).catch(()=>{
             alert("Failed")
->>>>>>> 702f71251dc05dc82a81011ccef4b79d735edb1a
         })
 
     }
