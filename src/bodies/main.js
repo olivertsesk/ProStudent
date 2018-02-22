@@ -8,9 +8,8 @@ import{
     ButtonGroup,
     Button
 } from 'react-bootstrap'
+import * as data from './../data'
 import * as firebase from 'firebase'
-import * as firebaseFunctions from './../firebase'
-
 
 class Main extends Component {
 
@@ -47,8 +46,8 @@ class Main extends Component {
                 if(!firebase.auth().currentUser.displayName){
                     var name = "";
                     if(this.state.newAccount){
-                        alert(this.state.newUser.firstName);
-                        alert(this.state.newUser.lastName);
+                        //alert(this.state.newUser.firstName);
+                        //alert(this.state.newUser.lastName);
                         name = "Professor " + this.state.newUser.firstName + " " + this.state.newUser.lastName;
                     }else{
                         name = firebase.auth().currentUser.email;
@@ -57,7 +56,7 @@ class Main extends Component {
                     firebase.auth().currentUser.updateProfile({
                         displayName: name
                     }).then(()=>{
-                        alert(name)
+                        //alert(name)
                     }).catch(function(error){
                         //error in changing displayname
                     })
@@ -87,10 +86,37 @@ class Main extends Component {
     }
 
     handleButton(i){
+        /*firebase.database().ref('classes').orderByChild('course').orderByChild('code').equalTo(this.state.login.email).on("value", function(snapshot) {
+            console.log(snapshot.val());
+            snapshot.forEach(function(data) {
+                console.log(data.key);
+            });
+        });*/
+
         if(this.state.mode === 2){
-            this.props.history.push('/student/');
+            firebase.database().ref('classes/').orderByChild('course/code').equalTo(this.state.login.email).once("value").then((snapshot)=> {
+                console.log(snapshot.val())
+                if(!snapshot.val()){
+                    alert("FAILED")
+                }
+                else{
+                    snapshot.forEach(childSnapshot => {
+                        //console.log(childSnapshot.val().course)
+                        for(var i = 0; i<childSnapshot.val().course.listStudent.length;i++){
+                            if(this.state.login.password === childSnapshot.val().course.listStudent[i]){
+                                data.setID(this.state.login.password)
+                                data.setInfo(childSnapshot.val())
+                                this.props.history.push('/student/');
+                            }
+                        }
+                    });
+                }
+
+            })
         }
-        this.login();
+        else{
+            this.login();
+        }
     }
 
 
@@ -137,7 +163,7 @@ class Main extends Component {
         switch(mode){
             case 2:
                 title = "Login To Class Portal"
-                topInput = "Access Code"
+                topInput = "Access Code (Course Code)"
                 bottomInput = "Student ID"
                 break;
             case 3:

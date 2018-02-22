@@ -14,7 +14,7 @@ var config = {
 };
 
 export const init=()=>{
-        firebase.initializeApp(config);
+    firebase.initializeApp(config);
 }
 
 export const logout =()=>{

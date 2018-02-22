@@ -12,6 +12,9 @@ import{
     Button
 } from 'react-bootstrap'
 import * as firebase from 'firebase'
+import * as firebaseFunctions from './../firebase'
+
+var fullListClasses = [];
 
 class ClassSettings extends Component {
 
@@ -36,6 +39,7 @@ class ClassSettings extends Component {
     resize = () => {
         this.setState({width:window.innerWidth,height:window.innerHeight})
     }
+
     componentDidMount() {
         window.addEventListener('resize', this.resize)
     }
@@ -45,18 +49,44 @@ class ClassSettings extends Component {
     }
 
     createClass(){
-        var idList = this.state.form.ids.split(",")
-        firebase.database().ref('/classes/').push({
-            course:{
-                title:this.state.form.title,
-                code:this.state.form.courseCode,
-                listStudent:idList,
+        fullListClasses =[];
+        firebase.database().ref('/classes').once('value').then((snapshot)=>{
+            snapshot.forEach(childSnapshot => {
+                fullListClasses.push(childSnapshot.val().course.code);
+            });
+            var isExisting = false;
+            console.log(this.state.form.courseCode)
+            fullListClasses.forEach(code=>{
+                console.log(code===this.state.form.courseCode)
+                if(code===this.state.form.courseCode){
+                    isExisting = true;
+                }
+            })
+            if(!isExisting){
+                var idList = this.state.form.ids.split(",")
+                firebase.database().ref('/classes/').push({
+                    professor:{
+                        UID:firebase.auth().currentUser.uid,
+                        name:firebase.auth().currentUser.displayName
+                    },
+                    course:{
+                        title:this.state.form.title,
+                        code:this.state.form.courseCode,
+                        listStudent:idList,
+                    }
+                }).then(()=>{
+                    alert("Class Created")
+                    this.setState({mode:0})
+                    this.props.fetch();
+                }).catch(()=>{
+                    alert("Failed")
+                })
             }
-        }).then(()=>{
-            alert("Class Created")
-        }).catch(()=>{
-            alert("Failed")
+            else{
+                alert("Session with Same course code exists")
+            }
         })
+
     }
 
     panel(mode){
@@ -106,7 +136,7 @@ class ClassSettings extends Component {
 
                 <ButtonGroup>
                     <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.createClass()}>
-                        <p style={{color:'white'}}>Add Class</p>
+                        <p style={{color:'white'}}>Create Class Portal</p>
                     </Button>
                     <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.setState({mode:0})}>
                         <p style={{color:'white'}}>Cancel</p>
@@ -158,10 +188,7 @@ class ClassSettings extends Component {
                     </div>
 
                 }
-
             </div>
-
-
         );
     }
 

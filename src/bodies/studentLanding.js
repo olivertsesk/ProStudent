@@ -4,28 +4,39 @@
 
 import React, { Component } from 'react';
 import{
-    Navbar,
-    Nav,
-    NavItem,
     Col,
-    Panel,
     ButtonGroup,
     Button,
     DropdownButton,
     MenuItem
 } from 'react-bootstrap'
+import {
+    Redirect
+} from 'react-router-dom';
+
 import CommentList from "./components/studentListing"
+import * as data from './../data'
 
 class StudentLanding extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading:true,
             height:window.innerHeight,
-            width:window.innerWidth
+            width:window.innerWidth,
+            studentID:null,
+            courseInfo:null,
         };
     }
+
     resize = () => {
         this.setState({width:window.innerWidth,height:window.innerHeight})
+    }
+
+    componentWillMount(){
+
+        this.setState({studentID:data.getID(),courseInfo:data.getInfo()})
+        this.setState({loading:false})
     }
 
     componentDidMount() {
@@ -36,9 +47,14 @@ class StudentLanding extends Component {
         window.removeEventListener('resize', this.resize)
     }
     render() {
+        if(!this.state.courseInfo){
+            return(
+                <Redirect to={'/main'}/>
+            )
+        }
         return (
             <div style={{width:'100%',height:this.state.height-65,padding:80}}>
-                <Col lg={8} md={8} sm={8} xs={12} style={{height:'100%',padding:0,background:'white',overflowY:"scroll"}}>
+                <Col lg={12} md={12} sm={12} xs={12} style={{height:'100%',padding:0,background:'white',overflowY:"scroll"}}>
                     <div style={{width:'100%',padding:10}}>
                         <h2>Leave your own feedback:</h2>
                         <div style={{display:'flex',flexDirection:'row'}}>
@@ -63,18 +79,7 @@ class StudentLanding extends Component {
                         </div>
                     </div>
                     <div>
-                        <CommentList/>
-                    </div>
-                </Col>
-                <Col lg={4} md={4} sm={4} xs={12} style={{height:'100%',padding:0}}>
-                    <div className="center" style={{flexDirection:'column',height:"100%",width:(this.state.width-160)*1/3-90,marginLeft:80,}}>
-                        <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
-                            <h3>McGill Student Id</h3>
-                        </div>
-                        <br style={{height:"10%",width:'90%'}}/>
-                        <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
-                            <h3>Course Description</h3>
-                        </div>
+                        <CommentList item={this.state.courseInfo}/>
                     </div>
                 </Col>
             </div>

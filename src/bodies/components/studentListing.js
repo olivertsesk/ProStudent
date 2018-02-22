@@ -22,6 +22,9 @@ class StudentListing extends Component {
         this.comment = this.comment.bind(this)
     }
 
+    componentWillMount(){
+        console.log(this.props)
+    }
 
     comment(){
         var up = 6;
@@ -56,10 +59,10 @@ class StudentListing extends Component {
             <div>
                 <div style={{height:150,border:"solid",borderColor:'#343f4b'}} onClick={()=>this.setState({showPanel:!this.state.showPanel})}>
                     <Col lg={7} md={7} sm={7} xs={7} className='center' style={{height:'100%',fontSize:30}}>
-                        <p style={{width:'100%'}}>ECSE 428:</p>
+                        <p style={{width:'100%'}}>{this.props.item.course.code}{" "+this.props.item.course.title}</p>
                     </Col>
                     <Col lg={5} md={5} sm={5} xs={5} className='center' style={{height:'100%',fontSize:20}}>
-                        <p style={{width:'100%'}}>Lecture 1 (1/8/2018)</p>
+                        <p style={{width:'100%'}}></p>
                     </Col>
                 </div>
                 {this.state.showPanel?
