@@ -53,7 +53,7 @@ class ClassSettings extends Component {
                 listStudent:idList,
             }
         }).then(()=>{
-            alert("Course Created Created");
+            alert("Course Created");
             this.setState({mode:0});
         }).catch(()=>{
             alert("Failed")
