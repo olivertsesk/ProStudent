@@ -11,6 +11,7 @@ import{
     ButtonGroup,
     Button
 } from 'react-bootstrap'
+import * as firebase from 'firebase'
 
 class ClassSettings extends Component {
 
@@ -21,6 +22,7 @@ class ClassSettings extends Component {
             width:window.innerWidth,
             mode:0,
             form:{
+                title:null,
                 courseCode:null,
                 endDate:null,
                 ids:null
@@ -28,18 +30,33 @@ class ClassSettings extends Component {
         };
         this.classDetail = this.classDetail.bind(this)
         this.panel = this.panel.bind(this)
+        this.createClass = this.createClass.bind(this)
     }
 
     resize = () => {
         this.setState({width:window.innerWidth,height:window.innerHeight})
     }
     componentDidMount() {
-
         window.addEventListener('resize', this.resize)
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.resize)
+    }
+
+    createClass(){
+        var idList = this.state.form.ids.split(",")
+        firebase.database().ref('/classes/').push({
+            course:{
+                title:this.state.form.title,
+                code:this.state.form.courseCode,
+                listStudent:idList,
+            }
+        }).then(()=>{
+            alert("Class Created")
+        }).catch(()=>{
+            alert("Failed")
+        })
     }
 
     panel(mode){
@@ -62,6 +79,12 @@ class ClassSettings extends Component {
                 <p style={{color:"#3D99d4",fontSize:20}}>{title}</p>
                 <hr style={{color:"#B3b3b3",border:'solid',width:'90%',borderWidth:0.5}}/>
 
+                <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Course Title </p>
+                <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
+                       onChange={(e)=> this.setState({form:{...this.state.form,title:e.target.value}})}/>
+
+                <br/>
+
 
                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Course Code</p>
                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
@@ -82,7 +105,7 @@ class ClassSettings extends Component {
                 <br/>
 
                 <ButtonGroup>
-                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}}>
+                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.createClass()}>
                         <p style={{color:'white'}}>Add Class</p>
                     </Button>
                     <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.setState({mode:0})}>
