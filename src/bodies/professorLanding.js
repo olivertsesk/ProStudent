@@ -58,6 +58,7 @@ class ProfLanding extends Component {
     componentWillUnmount() {
         window.removeEventListener('resize', this.resize)
     }
+
     render() {
         if(this.state.loading){
             return(<div>

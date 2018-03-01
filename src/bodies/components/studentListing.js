@@ -7,49 +7,80 @@ import{
     Nav,
     NavItem,
     Col,
-    Panel,
+    Button,
     Radio
 } from 'react-bootstrap'
+import * as firebase from 'firebase'
+import * as data from './../../data'
 
-const comments = [1,2];
+
 
 class StudentListing extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showPanel:false
+            showPanel:false,
+            comments : []
         };
         this.comment = this.comment.bind(this)
+        this.upvote = this.upvote.bind(this)
     }
 
     componentWillMount(){
+
+        firebase.database().ref('/classes/'+data.getCourseID()+'/feedback').on('value',(snapshot) =>{
+            var comments = this.state.comments;
+            comments =[];
+            snapshot.forEach(function(item) {
+                comments.push(item);
+            });
+            this.setState({comments})
+        })
         console.log(this.props)
     }
 
-    comment(){
-        var up = 6;
-        var down = 2;
-        return(
-            <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
-                <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:15}}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum.
-                    Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
-                </Col>
-                <Col lg={4} md={4} sm={4} xs={4} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
+    upvote(item){
 
-                    <Radio value="up" onClick={()=>{up++}}>
+        var original_list;
+        if(item.val().list!==null && item.val().list !==undefined){
+            original_list= item.val().list;
+        }
+        else original_list = [];
+        original_list.push(data.getID());
+        firebase.database().ref('/classes/'+data.getCourseID()+'/feedback/'+item.key).update({
+            list:original_list
+        }).then(()=>{
+            alert("voted");
+        }).catch(()=>{
+            alert("error in voting")
+        })
+    }
+
+    comment(item,i){
+        var list = item.val().list;
+        var myID = data.getID();
+        var isExisting = false;
+        if(list!==null && list !==undefined){
+            for(var i =0; i<list.length; i++){
+                if(list[i]===myID){
+                    isExisting = true;
+                    break;
+                }
+            }
+        }
+
+        return(
+            <div style={{height:100,border:"solid",borderColor:'#343f4b'}} key ={i}>
+                <Col lg={10} md={10} sm={10} xs={10} className='center' style={{height:'100%',fontSize:15}}>
+                    {item.val().comment}
+                </Col>
+                <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
+                    <Button onClick={()=>this.upvote(item)} active={!isExisting}>
                         <img src={require('./../../image/thumbs_up.png')} style={{width:40,height:40}}/>
-                        <p>[{up}]</p>
-                    </Radio>
-                    <div style={{width:'10%'}}/>
-                    <Radio value="down" onClick={()=>{down++}}>
-                        <img src={require('./../../image/thumbs_down.png')} style={{width:40,height:40}}/>
-                        <p>[{down}]</p>
-                    </Radio>
+                        <p>{item.val().list?item.val().list.length:0}</p>
+                    </Button>
                 </Col>
-                <Col lg={1} md={1} sm={1} xs={1} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
-                    <p>Rating:{up-down}</p>
-                </Col>
+
             </div>
         )
     }
@@ -65,17 +96,11 @@ class StudentListing extends Component {
                         <p style={{width:'100%'}}></p>
                     </Col>
                 </div>
-                {this.state.showPanel?
-                    <Panel style={{position:'relative',width:'100%',height:250}}>
-                        <div>
-                            {
-                                comments.map(()=>this.comment())
-                            }
-                        </div>
-                    </Panel>
-                    :
-                    null
-                }
+                    <div>
+                        {
+                            this.state.comments.map((item,i)=>this.comment(item,i))
+                        }
+                    </div>
             </div>
         );
     }

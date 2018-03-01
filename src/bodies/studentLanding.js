@@ -26,7 +26,7 @@ class StudentLanding extends Component {
             loading:true,
             height:window.innerHeight,
             width:window.innerWidth,
-    studentID:null,
+            studentID:null,
             courseInfo:null,
         };
     }
@@ -34,8 +34,7 @@ class StudentLanding extends Component {
     sendFeedback() {
         // var comment = this.state.feedback.comment
         firebase.database().ref('/classes/' + data.getCourseID() + '/feedback').push({
-            comment:this.state.feedback.comment,
-            up:0,
+            comment:this.state.feedback.comment
         }).then(()=>{
             alert("Feedback Recorded")
             this.setState({mode:0})
