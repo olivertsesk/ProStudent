@@ -16,6 +16,8 @@ import {
 
 import CommentList from "./components/studentListing"
 import * as data from './../data'
+import * as firebase from 'firebase'
+
 
 class StudentLanding extends Component {
     constructor(props) {
@@ -24,9 +26,22 @@ class StudentLanding extends Component {
             loading:true,
             height:window.innerHeight,
             width:window.innerWidth,
-            studentID:null,
+    studentID:null,
             courseInfo:null,
         };
+    }
+
+    sendFeedback() {
+        // var comment = this.state.feedback.comment
+        firebase.database().ref('/classes/' + data.getCourseID() + '/feedback').push({
+            comment:this.state.feedback.comment,
+            up:0,
+        }).then(()=>{
+            alert("Feedback Recorded")
+            this.setState({mode:0})
+        }).catch((e)=>{
+            alert(e);
+        })
     }
 
     resize = () => {
@@ -68,11 +83,13 @@ class StudentLanding extends Component {
                                 <MenuItem eventKey="4">Complaint</MenuItem>
                             </DropdownButton>
                             <input style={{width:'100%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                                   placeholder="Type here..."/>
+                                   placeholder="Type here..."
+                                   onChange={(e)=> this.setState({feedback:{...this.state.feedback,comment:e.target.value}})}
+                                   />
                         </div>
                         <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
                             <ButtonGroup>
-                                <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>100?this.state.width/10:this.state.width/2}}>
+                                <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>100?this.state.width/10:this.state.width/2}} onClick={()=>this.sendFeedback()}>
                                     <p style={{color:'white'}}>Enter</p>
                                 </Button>
                             </ButtonGroup>

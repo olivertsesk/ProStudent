@@ -107,6 +107,7 @@ class Main extends Component {
                             if(this.state.login.password === childSnapshot.val().course.listStudent[i]){
                                 data.setID(this.state.login.password)
                                 data.setInfo(childSnapshot.val())
+                                data.setCourseID(childSnapshot.key)
                                 this.props.history.push('/student/');
                             }
                         }
@@ -314,4 +315,3 @@ class Main extends Component {
     }
 }
 export default Main
-

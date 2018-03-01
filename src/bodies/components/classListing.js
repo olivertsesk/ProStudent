@@ -15,7 +15,7 @@ import{
 
 const comments = [1,2];
 
-class StudentLanding extends Component {
+class ClassListing extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -73,4 +73,4 @@ class StudentLanding extends Component {
     }
 }
 
-export default StudentLanding;
+export default ClassListing;
