@@ -12,6 +12,7 @@ import{
 import ClassList from './components/classListing'
 import ClassManager from './classSettings'
 import * as firebase from 'firebase'
+import * as data from "../data";
 
 var fullClass=[];
 var myClass = [];
@@ -25,34 +26,34 @@ class ProfLanding extends Component {
             width:window.innerWidth,
             classManager:false,
         };
-        this.classListFetch = this.classListFetch.bind(this);
     }
     resize = () => {
         this.setState({width:window.innerWidth,height:window.innerHeight})
     }
 
     componentWillMount(){
-        this.setState({loading:true})
 
-        fullClass=[]
-        myClass = [];
-        this.classListFetch()
-    }
-
-    classListFetch(){
-        myClass=[]
-        firebase.database().ref('/classes').once('value').then((snapshot)=>{
-            snapshot.forEach(childSnapshot => {
-                if(childSnapshot.val().professor.UID===firebase.auth().currentUser.uid){
-                    myClass.push(childSnapshot.val())
-                }
-            });
-            this.setState({loading:false})
-        })
     }
 
     componentDidMount() {
         window.addEventListener('resize', this.resize)
+        this.setState({loading:true})
+
+        if(!firebase.auth().currentUser||!firebase.auth().currentUser.uid||firebase.auth().currentUser===null||firebase.auth().currentUser===undefined){
+            this.props.history.push('/');
+        }
+        else{
+            firebase.database().ref('/classes').orderByChild('professor/UID').equalTo(firebase.auth().currentUser.uid).on('value',(snapshot)=>{
+                myClass=[];
+                console.log(snapshot.val())
+                snapshot.forEach(childSnapshot => {
+                    myClass.push(childSnapshot)
+                });
+                this.setState({loading:false})
+                this.forceUpdate();
+            })
+        }
+
     }
 
     componentWillUnmount() {
@@ -69,7 +70,7 @@ class ProfLanding extends Component {
         return (
             <div>
                 {this.state.classManager?
-                    <ClassManager close={()=>this.setState({classManager:false})} fetch={()=>this.classListFetch()}/>
+                    <ClassManager close={()=>this.setState({classManager:false})} />
                     :
                     <div style={{width:'100%',height:this.state.height-65,padding:80}}>
                         <Col lg={8} md={8} sm={8} xs={12} style={{height:'100%',padding:0,background:'white',overflowY:"scroll"}}>
@@ -77,7 +78,6 @@ class ProfLanding extends Component {
                                 return(
                                     <ClassList item={item} key={i}/>
                                 )
-
                             })}
                         </Col>
                         <Col lg={4} md={4} sm={4} xs={12} style={{height:'100%',padding:0}}>

@@ -12,15 +12,16 @@ import{
     Col,
     Panel
 } from 'react-bootstrap'
-
-const comments = [1,2];
+import * as firebase from "firebase";
+import * as data from "../../data";
 
 class ClassListing extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showPanel:false,
-            color_blue: false
+            color_blue: false,
+            comments:[]
         };
         this.comment = this.comment.bind(this)
     }
@@ -28,15 +29,27 @@ class ClassListing extends Component {
     changeColor(){
         this.setState({color_blue: !this.state.color_blue})
     }
+    componentDidMount(){
+        firebase.database().ref('/classes/'+this.props.item.key+'/feedback').on('value',(snapshot) =>{
+            var comments = this.state.comments;
+            comments =[];
 
-    comment(){
+            snapshot.forEach(function(item) {
+                comments.push(item.val());
+            });
+            this.setState({comments})
+
+        })
+    }
+
+    comment(item,i){
         return(
             <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
                 <Col lg={8} md={8} sm={8} xs={8} className='center' style={{height:'100%',fontSize:15}}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum. Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
+                    {item.comment}
                 </Col>
                 <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:30}}>
-                    Rating: 0
+                    {item.list?item.list.length:0}
                 </Col>
             </div>
         )
@@ -48,7 +61,7 @@ class ClassListing extends Component {
             <div>
                 <div style={{height:150,border:"solid",borderColor:'#343f4b', background: bgColor}} onClick={()=>this.setState({showPanel:!this.state.showPanel}, this.changeColor.bind(this))}>
                     <Col lg={7} md={7} sm={7} xs={7} className='center' style={{height:'100%',fontSize:30}}>
-                        <p style={{width:'100%'}}>{this.props.item.course.code} {" "+this.props.item.course.title}</p>
+                        <p style={{width:'100%'}}>{this.props.item.val().course.code} {" "+this.props.item.val().course.title}</p>
                     </Col>
                     <Col lg={1} md={1} sm={1} xs={1} className='center' style={{height:'100%',fontSize:30}}>
                         [0]
@@ -58,13 +71,12 @@ class ClassListing extends Component {
                     </Col>
                 </div>
                 {this.state.showPanel?
-                    <Panel style={{width:'100%',height:250}}>
-                        <div>
-                            {
-                                comments.map(()=>this.comment())
-                            }
-                        </div>
-                    </Panel>
+                    <div>
+                        {
+                            //comments.map((item,i)=>this.comment(item,i))
+                            this.state.comments.map((item,i)=>this.comment(item,i))
+                        }
+                    </div>
                     :
                     null
                 }

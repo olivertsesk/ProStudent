@@ -43,6 +43,7 @@ class Main extends Component {
     componentWillMount(){
         firebase.auth().onAuthStateChanged((user)=>{
             if(user) {
+
                 if(!firebase.auth().currentUser.displayName){
                     var name = "";
                     if(this.state.newAccount){
@@ -67,13 +68,12 @@ class Main extends Component {
                 if(adminID == firebase.auth().currentUser.uid){
                     this.props.history.push('/admin/');
                 }
-                else{
+                else if(firebase.auth().currentUser.uid){
                     this.props.history.push('/prof/');
                 }
             }
             else{
                 this.props.history.push('/main');
-                this.main();
             }
         });
 

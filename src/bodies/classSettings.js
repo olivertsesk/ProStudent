@@ -77,7 +77,6 @@ class ClassSettings extends Component {
                 }).then(()=>{
                     alert("Class Created")
                     this.setState({mode:0})
-                    this.props.fetch();
                 }).catch(()=>{
                     alert("Failed")
                 })

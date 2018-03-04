@@ -10,8 +10,6 @@ import{
     Panel
 } from 'react-bootstrap'
 
-const comments = [1,2];
-
 class CourseListing extends Component {
     constructor(props) {
         super(props);
