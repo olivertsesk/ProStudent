@@ -50,24 +50,13 @@ class StudentListing extends Component {
         firebase.database().ref('/classes/'+data.getCourseID()+'/feedback/'+item.key).update({
             list:original_list
         }).then(()=>{
-            alert("voted");
         }).catch(()=>{
             alert("error in voting")
         })
     }
 
     comment(item,i){
-        var list = item.val().list;
         var myID = data.getID();
-        var isExisting = false;
-        if(list!==null && list !==undefined){
-            for(var i =0; i<list.length; i++){
-                if(list[i]===myID){
-                    isExisting = true;
-                    break;
-                }
-            }
-        }
 
         return(
             <div style={{height:100,border:"solid",borderColor:'#343f4b'}} key ={i}>
@@ -75,12 +64,20 @@ class StudentListing extends Component {
                     {item.val().comment}
                 </Col>
                 <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
-                    <Button onClick={()=>this.upvote(item)} active={!isExisting}>
+                    <Button onClick={()=>this.upvote(item)}
+                            active={this.state.comments[i].val().list?
+                                !this.state.comments[i].val().list.includes(myID)
+                                :false
+                            }
+                            disabled={this.state.comments[i].val().list?
+                                this.state.comments[i].val().list.includes(myID)
+                                :false
+                            }
+                    >
                         <img src={require('./../../image/thumbs_up.png')} style={{width:40,height:40}}/>
                         <p>{item.val().list?item.val().list.length:0}</p>
                     </Button>
                 </Col>
-
             </div>
         )
     }
