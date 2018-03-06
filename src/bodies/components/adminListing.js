@@ -6,6 +6,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { Col, Panel } from 'react-bootstrap';
+import * as firebase from 'firebase';
 
 // Local Dependencies
 import * as fire from './../../firebase';
@@ -81,14 +82,20 @@ class AdminListings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      courses: {}
     };
+  }
 
+  componentDidMount() {
+    const ref = firebase.database().ref('classes/').orderByChild('course/code');
+    ref.once('value', snap => {
+      this.setState({courses: snap.val()});
+    });
   }
 
   render() {
     return (
-      <h1>Hello world</h1>
+      <h1>Hello World</h1>
     );
   }
 }

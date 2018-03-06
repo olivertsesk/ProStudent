@@ -43,8 +43,6 @@ class AdminLanding extends Component {
         <Col className="landingPageHalfCol" lg={8} md={8} sm={8} xs={12}>
           <div className="classListWrapper">
             <ClassList/>
-            <ClassList/>
-            <ClassList/>
           </div>
         </Col>
 
