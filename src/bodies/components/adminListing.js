@@ -10,6 +10,7 @@ import{
     Panel
 } from 'react-bootstrap'
 import * as firebase from "firebase";
+import * as firebaseFunctions from "../../firebase";
 
 const comments = [1,2];
 
@@ -22,6 +23,7 @@ class AdminListing extends Component {
             comments:[]
         };
         this.comment = this.comment.bind(this)
+        this.deleteComment = this.deleteComment.bind(this)
     }
 
     changeColor(){
@@ -35,26 +37,36 @@ class AdminListing extends Component {
             comments =[];
 
             snapshot.forEach(function(item) {
-                comments.push(item.val());
+                comments.push(item);
             });
             comments.sort((a,b)=>{
-                return b.list.length - a.list.length; //ASC, For Descending order use: b - a
+                return b.val().list.length - a.val().list.length; //ASC, For Descending order use: b - a
             });
             this.setState({comments})
             console.log(comments + this.props.item.key)
         })
     }
 
-
+    deleteComment(item){
+        firebase.database().ref('/classes/'+this.props.item.key+'/feedback/'+item.key).remove(()=>alert('removed')).catch(()=>('failed'))
+    }
 
     comment(item,i){
         return(
           <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
               <Col lg={10} md={10} sm={10} xs={10} className='center' style={{height:'100%',fontSize:15}}>
-                  {item.comment}
+                  {item.val().comment}
               </Col>
               <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:30}}>
-                  Rating: {item.list.length}
+                  <img src={require('./../../image/delete.svg')} style={{position:'absolute',top: 10, right : 10, width:10,height:10}}
+                       onClick={()=>{
+                           var r = window.confirm("Are you sure?")
+                           if(r){
+                               this.deleteComment(item,i)
+                           }
+                       }}
+                  />
+                  Rating: {item.val().list.length}
               </Col>
           </div>
         )
