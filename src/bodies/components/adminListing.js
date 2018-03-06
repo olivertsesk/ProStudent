@@ -26,8 +26,6 @@ class AdminListing extends Component {
       color_blue: false
     };
 
-    console.log(this.state)
-
     this.comment = this.comment.bind(this);
   }
 
@@ -37,17 +35,17 @@ class AdminListing extends Component {
 
   comment(){
     return(
-      <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
-        <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:15}}>
-          <p style={{width:'100%'}}>ID: 260000000</p>
+      <div className="commentWrapper">
+        <Col lg={5} md={5} sm={5} xs={5} className="commentCol">
+          <div className="commentAuthor">
+            <p>ID: TEST</p>
+          </div>
+          <div className="comment">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum. Morbi nec lacus condimentum, hendrerit mi eu, feugiat.</p>
+          </div>
         </Col>
-
-        <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:15}}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt congue ligula in rutrum. Morbi nec lacus condimentum, hendrerit mi eu, feugiat.
-        </Col>
-
-        <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:30}}>
-          Rating: 0
+        <Col lg={2} md={2} sm={2} xs={2} className="commentCol">
+          <p>Rating: 0</p>
         </Col>
       </div>
     );
@@ -57,25 +55,21 @@ class AdminListing extends Component {
     let bgColor = this.state.color_blue ? "#3D99D4" : "white"
     return (
       <div>
-        <div style={{height:150,border:"solid",borderColor:'#343f4b', background: bgColor}} onClick={()=>this.setState({showPanel:!this.state.showPanel}, this.changeColor.bind(this))}>
-          <Col lg={7} md={7} sm={7} xs={7} className='center' style={{height:'100%',fontSize:30}}>
-            <p style={{width:'100%'}}>{this.state.course}</p>
-          </Col>
-
-          <Col lg={4} md={4} sm={4} xs={4} className='center' style={{height:'100%',fontSize:30}}>
+        <div className="listing" style={{background: bgColor}} onClick={()=>this.setState({showPanel:!this.showPanelEvent}, ()=>console.log(this.state.showPanel))}>
+          <div lg={7} md={7} sm={7} xs={7} className="listingTitle">
+            <p>{this.state.course}</p>
+          </div>
+          <div lg={4} md={4} sm={4} xs={4} className="listingProf">
             <p>{this.state.prof}</p>
-          </Col>
+          </div>
         </div>
-        {this.state.showPanel?
-          <Panel style={{width:'100%',height:250}}>
-            <div>
-            {
-              comments.map(()=>this.comment())
-            }
-            </div>
-          </Panel>
-          :
-          null
+        {
+          this.state.showPanel ?
+            <Panel className="listingPanel scroll">
+              <div>
+                {comments.map(()=>this.comment())}
+              </div>
+            </Panel> : null
         }
       </div>
     );
@@ -95,7 +89,7 @@ class AdminListings extends Component {
   // On Init, Query Database for all Courses
   componentDidMount() {
     const ref = firebase.database().ref('classes/').orderByChild('course/code');
-    ref.once('value', snap => {
+    ref.on('value', snap => {
       this.setState({courses: snap.val()}, ()=> {
         this.buildListings();
       });
@@ -124,7 +118,7 @@ class AdminListings extends Component {
     }
 
     // Update State With Build Listings
-    this.setState({listings: concat}, () => {console.log(this.state.listings)})
+    this.setState({listings: concat});
   }
 
   render() {

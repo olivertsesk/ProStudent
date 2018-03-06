@@ -1,0 +1,57 @@
+/**
+ * Class Settings --------------------------------------------------------------
+ */
+
+.listing {
+  height: 150px;
+  border: 5px solid rgb(61, 153, 212);
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.listingTitle {
+  display: block;
+  width: 100%;
+  height: 60%;
+  padding: 16px;
+  font-size: 2em;
+}
+
+.listingProf {
+  display: block;
+  width: 100%;
+  height: 30%;
+  padding: 16px;
+  font-size: 1em;
+}
+
+.listingPanel {
+  display: block;
+  width: 100%;
+  height: 250px;
+  background: #FFFFFF;
+}
+
+.commentWrapper {
+  display: block;
+  width: 100%;
+  height: 125px;
+}
+
+.commentCol{
+  height: 100%;
+}
+
+.commentAuthor {
+  width: 100%;
+  height: 25%;
+  padding: 16px;
+  font-size: 0.8em;
+}
+
+.comment {
+  width: 100%;
+  height: 70%;
+  padding: 16px;
+  font-size: 1em;
+}
