@@ -6,16 +6,11 @@
 // Library Imports
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-import {
-  Navbar,
-  Nav,
-  NavItem,
-  Col,
-  Panel
-} from 'react-bootstrap'
+import { Col } from 'react-bootstrap';
 
 // Local Dependencies
-import ClassList from './components/adminListing'
+import ClassList from './components/adminListing';
+import * as fire from './../firebase';
 import * as data from '../data';
 
 // Admin Landing Page Class ----------------------------------------------------
@@ -28,18 +23,20 @@ class AdminLanding extends Component {
     };
   }
 
+  // Capture Resize
   resize = () => {
-    this.setState({width: window.innerWidth, height: window.innerHeight})
+    this.setState({width: window.innerWidth, height: window.innerHeight});
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.resize)
+    window.addEventListener('resize', this.resize);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize)
+    window.removeEventListener('resize', this.resize);
   }
 
+  // Main Page JSX -------------------------------------------------------------
   render() {
     return (
       <div className="landingPage" style={{height:this.state.height-65}}>

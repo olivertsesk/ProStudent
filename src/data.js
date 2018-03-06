@@ -18,13 +18,10 @@ export const setCourseID = (i)=>{
 
 export const getCourseID = ()=>{
     return courseID;
-
 }
-
 
 export const getID = ()=>{
     return studentID;
-
 }
 
 export const getInfo = ()=>{
