@@ -92,6 +92,7 @@ class AdminListings extends Component {
     };
   }
 
+  // On Init, Query Database for all Courses
   componentDidMount() {
     const ref = firebase.database().ref('classes/').orderByChild('course/code');
     ref.once('value', snap => {
@@ -102,7 +103,7 @@ class AdminListings extends Component {
   }
 
   buildListings() {
-    var listings = [];
+    var concat = [];
 
     // Iterate Through Found Courses
     for (var key in this.state.courses) {
@@ -118,10 +119,12 @@ class AdminListings extends Component {
 
         // Construct Listing and Append JSX to Listings
         var listing = new AdminListing(props);
-        var concat = this.state.listings.concat(listing.render());
-        this.setState({listings: concat}, () => {console.log(this.state.listings)})
+        concat = [...concat, listing.render()];
       }
     }
+
+    // Update State With Build Listings
+    this.setState({listings: concat}, () => {console.log(this.state.listings)})
   }
 
   render() {
