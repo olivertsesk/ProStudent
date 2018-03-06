@@ -10,13 +10,15 @@
      Panel
  } from 'react-bootstrap'
  import ClassList from './components/adminListing'
+import * as firebase from "firebase";
 
  class AdminLanding extends Component {
      constructor(props) {
          super(props);
          this.state = {
              height:window.innerHeight,
-             width:window.innerWidth
+             width:window.innerWidth,
+             classes:[]
          };
      }
      resize = () => {
@@ -25,18 +27,31 @@
 
      componentDidMount() {
          window.addEventListener('resize', this.resize)
+         firebase.database().ref('/classes/').on('value',(snapshot) =>{
+             var classes =[];
+             snapshot.forEach(function(item) {
+                 classes.push(item);
+             });
+             this.setState({classes})
+             console.log(classes)
+         })
      }
 
      componentWillUnmount() {
          window.removeEventListener('resize', this.resize)
      }
+
      render() {
          return (
              <div style={{width:'100%',height:this.state.height-65,padding:80}}>
                  <Col lg={8} md={8} sm={8} xs={12} style={{height:'100%',padding:0,background:'white',overflowY:"scroll"}}>
-                     <ClassList/>
-                     <ClassList/>
-                     <ClassList/>
+                     {
+                         this.state.classes.map((item,i)=>{
+                                 return(
+                                     <ClassList item ={item}/>
+                                 )
+                         })
+                     }
                  </Col>
                  <Col lg={4} md={4} sm={4} xs={12} style={{height:'100%',padding:0}}>
                      <div className="center" style={{flexDirection:'column',height:"100%",width:(this.state.width-160)*1/3-90,marginLeft:80,}}>

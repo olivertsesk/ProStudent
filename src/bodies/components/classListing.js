@@ -13,7 +13,6 @@ import{
     Panel
 } from 'react-bootstrap'
 import * as firebase from "firebase";
-import * as data from "../../data";
 
 class ClassListing extends Component {
     constructor(props) {
