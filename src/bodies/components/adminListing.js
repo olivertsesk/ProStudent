@@ -19,9 +19,14 @@ class AdminListing extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      course: props.course,
+      prof: props.prof,
+      feedback: props.feedback,
       showPanel: false,
       color_blue: false
     };
+
+    console.log(this.state)
 
     this.comment = this.comment.bind(this);
   }
@@ -54,11 +59,11 @@ class AdminListing extends Component {
       <div>
         <div style={{height:150,border:"solid",borderColor:'#343f4b', background: bgColor}} onClick={()=>this.setState({showPanel:!this.state.showPanel}, this.changeColor.bind(this))}>
           <Col lg={7} md={7} sm={7} xs={7} className='center' style={{height:'100%',fontSize:30}}>
-            <p style={{width:'100%'}}>ECSE 321</p>
+            <p style={{width:'100%'}}>{this.state.course}</p>
           </Col>
 
           <Col lg={4} md={4} sm={4} xs={4} className='center' style={{height:'100%',fontSize:30}}>
-            Prof. Jane Smith
+            <p>{this.state.prof}</p>
           </Col>
         </div>
         {this.state.showPanel?
@@ -82,20 +87,47 @@ class AdminListings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      courses: {}
+      courses: {},
+      listings: []
     };
   }
 
   componentDidMount() {
     const ref = firebase.database().ref('classes/').orderByChild('course/code');
     ref.once('value', snap => {
-      this.setState({courses: snap.val()});
+      this.setState({courses: snap.val()}, ()=> {
+        this.buildListings();
+      });
     });
+  }
+
+  buildListings() {
+    var listings = [];
+
+    // Iterate Through Found Courses
+    for (var key in this.state.courses) {
+      if (this.state.courses.hasOwnProperty(key)) {
+        var c = this.state.courses[key];
+
+        // Take Useful Information to Construct Listing
+        var props = {
+          course: c.course.title,
+          prof: c.professor.name,
+          feedback: c.feedback
+        }
+
+        // Construct Listing and Append JSX to Listings
+        var listing = new AdminListing(props);
+        var concat = this.state.listings.concat(listing.render());
+        this.setState({listings: concat}, () => {console.log(this.state.listings)})
+      }
+    }
   }
 
   render() {
     return (
-      <h1>Hello World</h1>
+      // <h1>Hello World</h1>
+      this.state.listings
     );
   }
 }
