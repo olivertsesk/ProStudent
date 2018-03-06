@@ -34,11 +34,14 @@ class ClassListing extends Component {
             comments =[];
 
             snapshot.forEach(function(item) {
-                comments.push(item.val());
+                comments.push(item);
             });
             comments.sort((a,b)=>{
-                return b.list.length - a.list.length; //ASC, For Descending order use: b - a
+                if(b.val().list&&a.val().list)
+                    return b.val().list.length - a.val().list.length;
             });
+            comments.reverse()
+            comments.reverse()
             this.setState({comments})
 
         })
@@ -48,10 +51,10 @@ class ClassListing extends Component {
         return(
             <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
                 <Col lg={8} md={8} sm={8} xs={8} className='center' style={{height:'100%',fontSize:15}}>
-                    {item.comment}
+                    {item.val().comment}
                 </Col>
                 <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:30}}>
-                    {item.list?item.list.length:0}
+                    {item.val().list?item.val().list.length:0}
                 </Col>
             </div>
         )

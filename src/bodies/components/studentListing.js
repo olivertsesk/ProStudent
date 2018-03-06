@@ -35,8 +35,11 @@ class StudentListing extends Component {
                 comments.push(item);
             });
             comments.sort((a,b)=>{
-                return b.val().list.length - a.val().list.length; //ASC, For Descending order use: b - a
+                if(b.val().list&&a.val().list)
+                    return b.val().list.length - a.val().list.length;
             });
+            comments.reverse();
+            comments.reverse();
             this.setState({comments})
         })
         console.log(this.props)

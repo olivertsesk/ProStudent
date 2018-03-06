@@ -40,8 +40,10 @@ class AdminListing extends Component {
                 comments.push(item);
             });
             comments.sort((a,b)=>{
-                return b.val().list.length - a.val().list.length; //ASC, For Descending order use: b - a
+                if(b.val().list&&a.val().list)
+                    return a.val().list.length - b.val().list.length;
             });
+            comments.reverse()
             this.setState({comments})
             console.log(comments + this.props.item.key)
         })
@@ -66,7 +68,7 @@ class AdminListing extends Component {
                            }
                        }}
                   />
-                  Rating: {item.val().list.length}
+                  Rating: {item.val().list?item.val().list.length:null}
               </Col>
           </div>
         )
