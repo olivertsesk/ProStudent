@@ -36,6 +36,9 @@ class ClassListing extends Component {
             snapshot.forEach(function(item) {
                 comments.push(item.val());
             });
+            comments.sort((a,b)=>{
+                return b.list.length - a.list.length; //ASC, For Descending order use: b - a
+            });
             this.setState({comments})
 
         })

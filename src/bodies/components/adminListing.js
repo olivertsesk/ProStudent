@@ -29,12 +29,16 @@ class AdminListing extends Component {
     }
 
     componentDidMount(){
-        firebase.database().ref('/classes/'+this.props.item.key+'/feedback').on('value',(snapshot) =>{
+        firebase.database().ref('/classes/'+this.props.item.key+'/feedback').orderByChild("list").on('value',(snapshot) =>{
+            console.log(snapshot.val())
             var comments = this.state.comments;
             comments =[];
 
             snapshot.forEach(function(item) {
                 comments.push(item.val());
+            });
+            comments.sort((a,b)=>{
+                return b.list.length - a.list.length; //ASC, For Descending order use: b - a
             });
             this.setState({comments})
             console.log(comments + this.props.item.key)

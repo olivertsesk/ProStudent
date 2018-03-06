@@ -34,6 +34,9 @@ class StudentListing extends Component {
             snapshot.forEach(function(item) {
                 comments.push(item);
             });
+            comments.sort((a,b)=>{
+                return b.val().list.length - a.val().list.length; //ASC, For Descending order use: b - a
+            });
             this.setState({comments})
         })
         console.log(this.props)
