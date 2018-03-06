@@ -1,0 +1,45 @@
+/**
+ * Universal Landing Page Classes ----------------------------------------------
+ */
+
+.landingPage {
+  width: 100%;
+  padding: 80px;
+}
+
+.landingPageHalfCol {
+  height: 100%;
+  padding: 0;
+}
+
+.classListWrapper {
+  height: 100%;
+  border-radius: 10px;
+  background-color: rgba(61, 153, 212, 0.4);
+}
+
+.rightSideWrapper {
+  height: 100%;
+  flex-direction: column !important;
+  margin-left: 80px;
+}
+
+.rightSideSpacer {
+  height: 10%;
+  width: 90%;
+}
+
+.rightSideButton {
+  width: 90%;
+  height: 50%;
+  padding: 16px;
+  flex-direction: column !important;
+  background-color: rgba(61, 153, 212, 0.8);
+  border-radius: 10px;
+  border: 5px solid rgb(61, 153, 212)
+}
+
+.rightSideButton p {
+  text-align: center;
+  color: #FFFFFF;
+}

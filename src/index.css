@@ -34,9 +34,14 @@ body {
   border-radius: 10px;
 }
 
+/*Scroll Element*/
+.scroll {
+  overflow-y: scroll;
+}
+
 .center{
   display:flex;
-  flex-direction:row ;
+  flex-direction:row;
   justify-content:center;
   align-items:center;
 }
@@ -49,3 +54,4 @@ body {
  * Import pages
  */
 @import './css/_classSettings.css';
+@import './css/_landingPage.css';
