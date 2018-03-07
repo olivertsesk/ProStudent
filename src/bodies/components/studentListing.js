@@ -45,6 +45,7 @@ class StudentListing extends Component {
             snapshot.forEach(function(item) {
                 comments.push(item);
             });
+             //sort listing by number of votes
             comments.sort((a,b)=>{
                     return (this.getRating(b)-this.getRating(a));
             });
