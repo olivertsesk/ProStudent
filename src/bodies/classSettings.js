@@ -65,8 +65,8 @@ class ClassSettings extends Component {
         window.removeEventListener('resize', this.resize)
     }
 
-    createClass(i){
-        if(i==1){
+    createClass(){
+        if(this.state.mode === 1){
         fullListClasses =[];
         firebase.database().ref('/classes').once('value').then((snapshot)=>{
             snapshot.forEach(childSnapshot => {
@@ -90,10 +90,9 @@ class ClassSettings extends Component {
                     course:{
                         title:this.state.form.title,
                         code:this.state.form.courseCode,
-                        listStudent:idList,
+                        listStudent:this.state.form.ids,
                     }
                 }).then(()=>{
-                    alert("Class Created")
                     this.setState({mode:0})
                 }).catch(()=>{
                     alert("Failed")
@@ -103,12 +102,12 @@ class ClassSettings extends Component {
                 alert("Session with same course code exists... Cannot be created!")
             }
         }).then(()=>{
-            alert("Course Created");
+            alert("Course added to the system!");
             this.setState({mode:0});
         }).catch(()=>{
             alert("Failed")
         })
-    }else if(i==2){
+    }else{
         //Update Class
     }
 
@@ -116,21 +115,21 @@ class ClassSettings extends Component {
 
     panel(mode, item){
         var header = null;
-        var title;
-        var courseCode;
-        var ids;
+        var titleTemp;
+        var courseCodeTemp;
+        var idsTemp;
         switch(mode){
             case 1:
                 header = "Add Class";
-                title = "";
-                courseCode = "";
-                ids = "";
+                titleTemp = "Course Title";
+                courseCodeTemp = "ECSE XXX";
+                idsTemp = "260******,260*****,...";
                 break;
             case 2:
                 header = "Edit Class";
-                title = item.val().course.title;
-                courseCode = item.val().course.code;
-                ids = this.commaSeparatedIDs(item);;
+                titleTemp = item.val().course.title;
+                courseCodeTemp = item.val().course.code;
+                idsTemp = this.commaSeparatedIDs(item);;
                 break;
             default:
                 break;
@@ -142,13 +141,13 @@ class ClassSettings extends Component {
 
                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Course Title </p>
                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                       onChange={(e)=> this.setState({form:{...this.state.form,title:e.target.value}})} value={title}/>
+                       onChange={(e)=> this.setState({form:{...this.state.form,title:e.target.value}})} placeholder={titleTemp}/>
 
                 <br/>
 
                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Course Code</p>
                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                       onChange={(e)=> this.setState({form:{...this.state.form,courseCode:e.target.value}})} value={courseCode}/>
+                       onChange={(e)=> this.setState({form:{...this.state.form,courseCode:e.target.value}})} placeholder={courseCodeTemp}/>
 
                 <br/>
 
@@ -160,7 +159,7 @@ class ClassSettings extends Component {
 
                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Student IDs (Separate by commas)</p>
                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                       onChange={(e)=> this.setState({form:{...this.state.form,ids:e.target.value}})} value={ids}/>
+                       onChange={(e)=> this.setState({form:{...this.state.form,ids:e.target.value}})} placeholder={idsTemp}/>
 
                 <br/>
 
@@ -195,12 +194,10 @@ class ClassSettings extends Component {
                         }}
                     >Delete</td>
                 </tr>
-                <tr className="settings-table-row">
-                    <td className="settings-table-cell clickable" colspan="5"  onClick={()=>this.setState({mode:1})}>Add Class</td>
-                </tr>
             </tbody>
         )
     }
+
 
     render() {
         return (
@@ -225,6 +222,9 @@ class ClassSettings extends Component {
                         {
                             this.state.classes.map((item)=>this.classDetail(item))
                         }
+                         <tr className="settings-table-row">
+                            <td className="settings-table-cell clickable" colspan="5"  onClick={()=>this.setState({mode:1})}>Add Class</td>
+                        </tr>
                         </table>
                     </div>
 
