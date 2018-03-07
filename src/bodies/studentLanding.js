@@ -47,7 +47,6 @@ class StudentLanding extends Component {
     }
 
     componentWillMount(){
-
         this.setState({studentID:data.getID(),courseInfo:data.getInfo()})
         this.setState({loading:false})
     }

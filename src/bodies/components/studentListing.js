@@ -118,7 +118,7 @@ class StudentListing extends Component {
                         <img src={require('./../../image/thumbs_down.png')} style={{width:40,height:40}}/>
                     </Button>
                 </Col>
-                <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
+                <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:25,color:'#343f4b'}}>
                     <p>Rating: {this.getRating(item)}</p>
                 </Col>
             </div>
