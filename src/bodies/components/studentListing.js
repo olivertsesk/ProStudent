@@ -56,7 +56,7 @@ class StudentListing extends Component {
 
     upvote(item){
         var up_list = [];
-        if(item.val().up.list){
+        if(item.val().up){
             up_list= item.val().up.list;
         }
         up_list.push(data.getID());
@@ -70,7 +70,7 @@ class StudentListing extends Component {
 
     downvote(item){
         var down_list = [];
-        if(item.val().down.list){
+        if(item.val().down){
             down_list= item.val().down.list;
         }
         down_list.push(data.getID());
@@ -100,7 +100,10 @@ class StudentListing extends Component {
     comment(item,i){
         return(
             <div style={{height:100,border:"solid",borderColor:'#343f4b'}} key ={i}>
-                <Col lg={8} md={8} sm={8} xs={8} className='center' style={{height:'100%',fontSize:15}}>
+                <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:15}}>
+                    <p>{item.val().tag?item.val().tag:"No Tag"}</p>
+                </Col>
+                <Col lg={6} md={6} sm={6} xs={6} className='center' style={{height:'100%',fontSize:15}}>
                     <p>{item.val().comment}</p>
                 </Col>
                 <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
@@ -108,13 +111,13 @@ class StudentListing extends Component {
                             active={this.isActive(i)}
                             disabled={!this.isActive(i)}
                     >
-                        <img src={require('./../../image/thumbs_up.png')} style={{width:40,height:40}}/>
+                        <img src={require('./../../image/thumbs_up.png')} style={{width:40,height:50}}/>
                     </Button>
                     <Button onClick={()=>this.downvote(item)}
                             active={this.isActive(i)}
                             disabled={!this.isActive(i)}
                     >
-                        <img src={require('./../../image/thumbs_down.png')} style={{width:40,height:40}}/>
+                        <img src={require('./../../image/thumbs_down.png')} style={{width:40,height:50}}/>
                     </Button>
                 </Col>
                 <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:25,color:'#343f4b'}}>
