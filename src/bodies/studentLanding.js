@@ -85,7 +85,7 @@ class StudentLanding extends Component {
                                    />
                         </div>
                         <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
-                            <ButtonGroup>
+                            <ButtonGroup class="center">
                                 <Button bsSize="large" style={{background:"#3d99d4",width:5*this.state.width/6}} onClick={()=>this.sendFeedback()}>
                                     <p style={{color:'white', fontSize:20}}>Submit Feedback</p>
                                 </Button>
