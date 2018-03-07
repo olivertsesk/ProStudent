@@ -54,11 +54,10 @@ class StudentListing extends Component {
     }
 
     upvote(item){
-        var up_list;
-        if(item.val().list!==null && item.val().list !==undefined){
+        var up_list = [];
+        if(item.val().up.list){
             up_list= item.val().up.list;
         }
-        else up_list = [];
         up_list.push(data.getID());
         firebase.database().ref('/classes/'+data.getCourseID()+'/feedback/'+item.key + '/up').update({
             list:up_list
@@ -69,11 +68,10 @@ class StudentListing extends Component {
     }
 
     downvote(item){
-        var down_list;
-        if(item.val().list!==null && item.val().list !==undefined){
+        var down_list = [];
+        if(item.val().down.list){
             down_list= item.val().down.list;
         }
-        else down_list = [];
         down_list.push(data.getID());
         firebase.database().ref('/classes/'+data.getCourseID()+'/feedback/'+item.key + '/down').update({
             list:down_list
