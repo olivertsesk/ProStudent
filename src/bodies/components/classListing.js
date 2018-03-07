@@ -28,6 +28,7 @@ class ClassListing extends Component {
     changeColor(){
         this.setState({color_blue: !this.state.color_blue})
     }
+
     componentDidMount(){
         firebase.database().ref('/classes/'+this.props.item.key+'/feedback').on('value',(snapshot) =>{
             var comments = this.state.comments;
@@ -58,10 +59,13 @@ class ClassListing extends Component {
     comment(item,i){
         return(
             <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
-                <Col lg={9} md={9} sm={9} xs={9} className='center' style={{height:'100%',fontSize:15}}>
+                <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:15}}>
+                    <p>{item.val().tag?item.val().tag:"No Tag"}</p>
+                </Col>
+                <Col lg={8} md={8} sm={8} xs={8} className='center' style={{height:'100%',fontSize:15}}>
                     {item.val().comment}
                 </Col>
-                <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:30}}>
+                <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:25}}>
                     <p>Rating: {this.getRating(item)}</p>
                 </Col>
             </div>
@@ -73,10 +77,10 @@ class ClassListing extends Component {
         return (
             <div>
                 <div style={{height:150,border:"solid",borderColor:'#343f4b', background: bgColor}} onClick={()=>this.setState({showPanel:!this.state.showPanel}, this.changeColor.bind(this))}>
-                    <Col lg={4} md={4} sm={4} xs={4} className='center' style={{height:'100%',fontSize:20}}>
+                    <Col lg={3} md={3} sm={3} xs={3} className='center' style={{height:'100%',fontSize:20}}>
                         <p style={{width:'100%'}}>{this.props.item.val().course.code}</p>
                     </Col>
-                    <Col lg={8} md={8} sm={8} xs={8} className='center' style={{height:'100%',fontSize:30}}>
+                    <Col lg={9} md={9} sm={9} xs={9} className='center' style={{height:'100%',fontSize:30}}>
                         <p style={{width:'100%'}}>{this.props.item.val().course.title}</p>
                     </Col>
                 </div>

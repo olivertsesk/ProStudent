@@ -28,13 +28,14 @@ class StudentLanding extends Component {
             width:window.innerWidth,
             studentID:null,
             courseInfo:null,
+            currentTag:"Other",
         };
     }
 
     sendFeedback() {
         // var comment = this.state.feedback.comment
         firebase.database().ref('/classes/' + data.getCourseID() + '/feedback').push({
-            comment:this.state.feedback.comment,studentID:this.state.studentID
+            comment:this.state.feedback.comment,studentID:this.state.studentID,tag:this.state.currentTag
         }).then(()=>{
             this.setState({mode:0})
         }).catch((e)=>{
@@ -58,6 +59,11 @@ class StudentLanding extends Component {
     componentWillUnmount() {
         window.removeEventListener('resize', this.resize)
     }
+
+    setTag(tag){
+        this.setState({currentTag:tag});
+    }
+
     render() {
         if(!this.state.courseInfo){
             return(
@@ -70,14 +76,16 @@ class StudentLanding extends Component {
                     <div style={{width:'100%',padding:10}}>
                         <h2>Leave your own feedback:</h2>
                         <div style={{display:'flex',flexDirection:'row'}}>
-                            <DropdownButton title="Tag" id="dropdown-size-large" style={{width:'100%',height:'100%'}}>
-                                <MenuItem eventKey="1">Question</MenuItem>
+                            <DropdownButton title={this.state.currentTag} id="dropdown-size-large" style={{width:'100%',height:'100%'}}>
+                                <MenuItem eventKey="1" value="Question" onSelect={()=>this.setTag("Question")}>Question</MenuItem>
                                 <MenuItem divider />
-                                <MenuItem eventKey="2">Suggestion</MenuItem>
+                                <MenuItem eventKey="2" value="Suggestion" onSelect={()=>this.setTag("Suggestion")}>Suggestion</MenuItem>
                                 <MenuItem divider />
-                                <MenuItem eventKey="3">Compliment</MenuItem>
+                                <MenuItem eventKey="3" value="Compliment" onSelect={()=>this.setTag("Compliment")}>Compliment</MenuItem>
                                 <MenuItem divider />
-                                <MenuItem eventKey="4">Complaint</MenuItem>
+                                <MenuItem eventKey="4" value="Complaint" onSelect={()=>this.setTag("Complaint")}>Complaint</MenuItem>
+                                <MenuItem divider />
+                                <MenuItem eventKey="5" value="Other" onSelect={()=>this.setTag("Other")}>Other</MenuItem>
                             </DropdownButton>
                             <input style={{width:'100%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
                                    placeholder="Comment here..."

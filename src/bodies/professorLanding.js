@@ -44,7 +44,6 @@ class ProfLanding extends Component {
         }
         else{
             firebase.database().ref('/classes').orderByChild('professor/UID').equalTo(firebase.auth().currentUser.uid).on('value',(snapshot)=>{
-                myClass=[];
                 console.log(snapshot.val())
                 snapshot.forEach(childSnapshot => {
                     myClass.push(childSnapshot)
