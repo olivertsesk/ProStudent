@@ -87,7 +87,6 @@ class ClassListing extends Component {
                 {this.state.showPanel?
                     <div>
                         {
-                            //comments.map((item,i)=>this.comment(item,i))
                             this.state.comments.map((item,i)=>this.comment(item,i))
                         }
                     </div>
