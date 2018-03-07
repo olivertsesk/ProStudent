@@ -24,12 +24,15 @@ class ClassSettings extends Component {
             height:window.innerHeight,
             width:window.innerWidth,
             mode:0,
+            loading:false,
             form:{
                 title:null,
                 courseCode:null,
                 endDate:null,
                 ids:null
-            }
+            },
+            classes:[],
+            selectedClass:null
         };
         this.classDetail = this.classDetail.bind(this)
         this.panel = this.panel.bind(this)
@@ -42,13 +45,28 @@ class ClassSettings extends Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.resize)
+        this.setState({loading:true})
+
+        if(!firebase.auth().currentUser||!firebase.auth().currentUser.uid||firebase.auth().currentUser===null||firebase.auth().currentUser===undefined){
+            this.props.history.push('/');
+        }else{
+            firebase.database().ref('/classes').orderByChild('professor/UID').equalTo(firebase.auth().currentUser.uid).on('value',(snapshot)=>{
+                console.log(snapshot.val())
+                snapshot.forEach(item => {
+                    this.state.classes.push(item)
+                });
+                this.setState({loading:false})
+                this.forceUpdate();
+            })
+        }
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.resize)
     }
 
-    createClass(){
+    createClass(i){
+        if(i==1){
         fullListClasses =[];
         firebase.database().ref('/classes').once('value').then((snapshot)=>{
             snapshot.forEach(childSnapshot => {
@@ -90,39 +108,47 @@ class ClassSettings extends Component {
         }).catch(()=>{
             alert("Failed")
         })
+    }else if(i==2){
+        //Update Class
+    }
 
     }
 
-    panel(mode){
-        var title = null;
+    panel(mode, item){
+        var header = null;
+        var title;
+        var courseCode;
+        var ids;
         switch(mode){
             case 1:
-                title = "Add Class"
+                header = "Add Class";
+                title = "";
+                courseCode = "";
+                ids = "";
                 break;
             case 2:
-                title = "Edit Class"
-                break;
-            case 3:
-                title = "Delete Class"
+                header = "Edit Class";
+                title = item.val().course.title;
+                courseCode = item.val().course.code;
+                ids = this.commaSeparatedIDs(item);;
                 break;
             default:
                 break;
         }
         return(
             <div className="center" style={{flexDirection:'column',width:'100%',height:'100%'}}>
-                <p style={{color:"#3D99d4",fontSize:20}}>{title}</p>
+                <p style={{color:"#3D99d4",fontSize:20}}>{header}</p>
                 <hr style={{color:"#B3b3b3",border:'solid',width:'90%',borderWidth:0.5}}/>
 
                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Course Title </p>
                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                       onChange={(e)=> this.setState({form:{...this.state.form,title:e.target.value}})}/>
+                       onChange={(e)=> this.setState({form:{...this.state.form,title:e.target.value}})} value={title}/>
 
                 <br/>
 
-
                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Course Code</p>
                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                       onChange={(e)=> this.setState({form:{...this.state.form,courseCode:e.target.value}})} placeholder="ECSE XXX"/>
+                       onChange={(e)=> this.setState({form:{...this.state.form,courseCode:e.target.value}})} value={courseCode}/>
 
                 <br/>
 
@@ -134,13 +160,13 @@ class ClassSettings extends Component {
 
                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Student IDs (Separate by commas)</p>
                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                       onChange={(e)=> this.setState({form:{...this.state.form,ids:e.target.value}})}/>
+                       onChange={(e)=> this.setState({form:{...this.state.form,ids:e.target.value}})} value={ids}/>
 
                 <br/>
 
                 <ButtonGroup>
-                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.createClass()}>
-                        <p style={{color:'white'}}>Create Class Portal</p>
+                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.createClass({mode})}>
+                        <p style={{color:'white'}}>{header}</p>
                     </Button>
                     <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.setState({mode:0})}>
                         <p style={{color:'white'}}>Cancel</p>
@@ -151,17 +177,26 @@ class ClassSettings extends Component {
         )
     }
 
-    classDetail(){
+    classDetail(item){
         return(
             <tbody style={{width:'100%'}}>
                 <tr className="settings-table-row">
-                    <td className="settings-table-cell" style={{width:'90%'}}>ECSE 428</td>
-                    <td className="settings-table-cell clickable" onClick={()=>this.openPortal()}>Open Portal</td>
-                    <td className="settings-table-cell clickable" onClick={()=>this.setState({mode:2})}>Edit</td>
-                    <td className="settings-table-cell clickable" onClick={()=>this.setState({mode:3})}>Delete</td>
+                    <td className="settings-table-cell" style={{width:'20%'}}>{item.val().course.code}</td>
+                    <td className="settings-table-cell" style={{width:'70%'}}>{item.val().course.title}</td>
+                    <td className="settings-table-cell clickable" onClick={()=>this.openPortal(item)}>Access Code</td>
+                    <td className="settings-table-cell clickable" onClick={()=>{
+                        this.setState({mode:2,selectedClass:item});
+                        }}>Edit</td>
+                    <td className="settings-table-cell clickable" onClick={()=>{
+                            var del = window.confirm("Are you sure you'd like to delete " + item.val().course.code +"?");
+                            if(del){
+                                this.deletePortal(item);
+                            }
+                        }}
+                    >Delete</td>
                 </tr>
                 <tr className="settings-table-row">
-                    <td className="settings-table-cell clickable" colspan="4"  onClick={()=>this.setState({mode:1})}>Add Class</td>
+                    <td className="settings-table-cell clickable" colspan="5"  onClick={()=>this.setState({mode:1})}>Add Class</td>
                 </tr>
             </tbody>
         )
@@ -177,7 +212,7 @@ class ClassSettings extends Component {
                         width:this.state.width>1000?this.state.width/3:this.state.width*6/8,
                         height:this.state.width>1000?this.state.height*7/8:this.state.height*13/16
                     }}>
-                        {this.panel(this.state.mode)}
+                        {this.panel(this.state.mode, this.state.selectedClass)}
                     </Panel>
 
                 :
@@ -187,7 +222,9 @@ class ClassSettings extends Component {
                         Your Classes
                         </div>
                         <table style={{width:'100%',border:'solid',borderColor:'#3d99d4',borderWidth:2}}>
-                        {this.classDetail()}
+                        {
+                            this.state.classes.map((item)=>this.classDetail(item))
+                        }
                         </table>
                     </div>
 
@@ -196,8 +233,29 @@ class ClassSettings extends Component {
         );
     }
 
-    openPortal(){
-        alert("Portal Access Code: ncx84732r78r");
+    openPortal(item){
+        alert("Portal Access Code: " + item.val().course.code);
+    }
+
+    //Doesn't remove classListing from UI yet...
+    deletePortal(item){
+        firebase.database().ref('/classes/'+item.key).remove(()=>alert('Class Removed')).catch(()=>("Class Couldn't Be Removed"))
+    }
+
+    //Not working yet
+    commaSeparatedIDs(item){
+        var idList;
+        var idString;
+        firebase.database().ref('/classes/'+item.key).on('value',(snapshot) =>{
+            var idList = item.val().course.listStudent;
+            var idString = idList[0];
+            snapshot.forEach(function(item) {
+                for(var i = 1; i < idList.length; i++){
+                    idString.concat(",").concat(idList[i]);
+                }
+            });
+        });
+        return(idString);
     }
 }
 
