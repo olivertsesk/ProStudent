@@ -88,8 +88,8 @@ class ProfLanding extends Component {
                                 <br style={{height:"10%",width:'90%'}}/>
                                 <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}
                                      onClick={()=>this.setState({classManager:true})} >
-                                    <img src={require('./../image/add.svg')} style={{width:50,height:50,position:'relative'}}/>
-                                    Manage Classes
+                                    <img src={require('./../image/add.svg')} style={{width:30,height:30,position:'relative'}}/>
+                                    <p style={{fontSize:30}}>Manage Classes</p>
                                 </div>
                             </div>
                         </Col>

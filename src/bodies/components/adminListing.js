@@ -40,10 +40,9 @@ class AdminListing extends Component {
                 comments.push(item);
             });
             comments.sort((a,b)=>{
-                if(b.val().list&&a.val().list)
-                    return a.val().list.length - b.val().list.length;
+                if(b.val().up&&a.val().up&&b.val().down&&a.val().down)
+                    return ((b.val().up.length - b.val().down.length) - (a.val().up.length - a.val().down.length));
             });
-            comments.reverse()
             this.setState({comments})
             console.log(comments + this.props.item.key)
         })
@@ -53,13 +52,32 @@ class AdminListing extends Component {
         firebase.database().ref('/classes/'+this.props.item.key+'/feedback/'+item.key).remove(()=>alert('removed')).catch(()=>('failed'))
     }
 
+    getRating(item){
+        var rating = 0;
+        if (item.val().up && item.val().down){
+            rating = item.val().up.list.length - item.val().down.list.length;
+        }else if(item.val().up){
+            rating = item.val().up.list.length;
+        }else if(item.val().down){
+            rating = -item.val().down.list.length;
+        }
+
+        return(rating);
+    }
+
     comment(item,i){
         return(
           <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
-              <Col lg={10} md={10} sm={10} xs={10} className='center' style={{height:'100%',fontSize:15}}>
+              <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:15}}>
+                  {item.val().studentID?item.val().studentID:"ID Not Recorded"}
+              </Col>
+              <Col lg={7} md={7} sm={7} xs={7} className='center' style={{height:'100%',fontSize:15}}>
                   {item.val().comment}
               </Col>
-              <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:30}}>
+              <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:20}}>
+                Rating: {this.getRating(item)}
+              </Col>
+              <Col lg={1} md={1} sm={1} xs={1} className='center' style={{height:'100%',fontSize:30}}>
                   <img src={require('./../../image/delete.svg')} style={{position:'absolute',top: 10, right : 10, width:10,height:10}}
                        onClick={()=>{
                            var r = window.confirm("Are you sure?")
@@ -68,7 +86,6 @@ class AdminListing extends Component {
                            }
                        }}
                   />
-                  Rating: {item.val().list?item.val().list.length:null}
               </Col>
           </div>
         )

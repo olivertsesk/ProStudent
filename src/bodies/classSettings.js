@@ -82,7 +82,7 @@ class ClassSettings extends Component {
                 })
             }
             else{
-                alert("Session with Same course code exists")
+                alert("Session with same course code exists... Cannot be created!")
             }
         }).then(()=>{
             alert("Course Created");

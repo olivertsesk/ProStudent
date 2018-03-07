@@ -34,9 +34,8 @@ class StudentLanding extends Component {
     sendFeedback() {
         // var comment = this.state.feedback.comment
         firebase.database().ref('/classes/' + data.getCourseID() + '/feedback').push({
-            comment:this.state.feedback.comment
+            comment:this.state.feedback.comment,studentID:this.state.studentID
         }).then(()=>{
-            alert("Feedback Recorded")
             this.setState({mode:0})
         }).catch((e)=>{
             alert(e);
@@ -48,7 +47,6 @@ class StudentLanding extends Component {
     }
 
     componentWillMount(){
-
         this.setState({studentID:data.getID(),courseInfo:data.getInfo()})
         this.setState({loading:false})
     }
@@ -82,14 +80,14 @@ class StudentLanding extends Component {
                                 <MenuItem eventKey="4">Complaint</MenuItem>
                             </DropdownButton>
                             <input style={{width:'100%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                                   placeholder="Type here..."
+                                   placeholder="Comment here..."
                                    onChange={(e)=> this.setState({feedback:{...this.state.feedback,comment:e.target.value}})}
                                    />
                         </div>
                         <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
-                            <ButtonGroup>
-                                <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>100?this.state.width/10:this.state.width/2}} onClick={()=>this.sendFeedback()}>
-                                    <p style={{color:'white'}}>Enter</p>
+                            <ButtonGroup class="center">
+                                <Button bsSize="large" style={{background:"#3d99d4",width:5*this.state.width/6}} onClick={()=>this.sendFeedback()}>
+                                    <p style={{color:'white', fontSize:20}}>Submit Feedback</p>
                                 </Button>
                             </ButtonGroup>
                         </div>
