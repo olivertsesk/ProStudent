@@ -34,12 +34,10 @@ class StudentListing extends Component {
             snapshot.forEach(function(item) {
                 comments.push(item);
             });
+             //sort listing by number of votes
             comments.sort((a,b)=>{
-                if(b.val().list&&a.val().list)
-                    return b.val().list.length - a.val().list.length;
-            });
-            comments.reverse();
-            comments.reverse();
+                    return b.val().list.length - a.val().list.length; 
+                });
             this.setState({comments})
         })
         console.log(this.props)
