@@ -40,8 +40,8 @@ class AdminListing extends Component {
                 comments.push(item);
             });
             comments.sort((a,b)=>{
-                if(b.val().list&&a.val().list)
-                    return a.val().list.length - b.val().list.length;
+                if(b.val().up&&a.val().up&&b.val().down&&a.val().down)
+                    return ((b.val().up.length - b.val().down.length) - (a.val().up.length - a.val().down.length));
             });
             comments.reverse()
             this.setState({comments})
@@ -51,6 +51,19 @@ class AdminListing extends Component {
 
     deleteComment(item){
         firebase.database().ref('/classes/'+this.props.item.key+'/feedback/'+item.key).remove(()=>alert('removed')).catch(()=>('failed'))
+    }
+
+    getRating(item){
+        var rating = 0;
+        if (item.val().up && item.val().down){
+            rating = item.val().up.length - item.val().down.length;
+        }else if(item.val().up){
+            rating = item.val().up.length;
+        }else if(item.val().down){
+            rating = -item.val().down.length;
+        }
+
+        return(rating);
     }
 
     comment(item,i){
@@ -68,7 +81,7 @@ class AdminListing extends Component {
                            }
                        }}
                   />
-                  Rating: {item.val().list?item.val().list.length:null}
+                  Rating: {this.getRating(item)}
               </Col>
           </div>
         )
