@@ -13,8 +13,6 @@ import{
 import * as firebase from 'firebase'
 import * as data from './../../data'
 
-
-
 class StudentListing extends Component {
     constructor(props) {
         super(props);
@@ -30,11 +28,11 @@ class StudentListing extends Component {
     getRating(item){
         var rating = 0;
         if (item.val().up && item.val().down){
-            rating = item.val().up.length - item.val().down.length;
+            rating = item.val().up.list.length - item.val().down.list.length;
         }else if(item.val().up){
-            rating = item.val().up.length;
+            rating = item.val().up.list.length;
         }else if(item.val().down){
-            rating = -item.val().down.length;
+            rating = -item.val().down.list.length;
         }
 
         return(rating);
@@ -58,7 +56,7 @@ class StudentListing extends Component {
     upvote(item){
         var up_list;
         if(item.val().list!==null && item.val().list !==undefined){
-            up_list= item.val().up;
+            up_list= item.val().up.list;
         }
         else up_list = [];
         up_list.push(data.getID());
@@ -73,7 +71,7 @@ class StudentListing extends Component {
     downvote(item){
         var down_list;
         if(item.val().list!==null && item.val().list !==undefined){
-            down_list= item.val().down;
+            down_list= item.val().down.list;
         }
         else down_list = [];
         down_list.push(data.getID());
@@ -87,12 +85,14 @@ class StudentListing extends Component {
 
     isActive(i){
         var myID = data.getID();
+        var up = this.state.comments[i].val().up;
+        var down = this.state.comments[i].val().down;
         if (this.state.comments[i].val().up && this.state.comments[i].val().down){
-            return(!this.state.comments[i].val().up.includes(myID)&&!this.state.comments[i].val().down.includes(myID));
+            return(!up.list.includes(myID)&&!down.list.includes(myID));
         }else if(this.state.comments[i].val().up){
-            return(!this.state.comments[i].val().up.includes(myID));
+            return(!up.list.includes(myID));
         }else if(this.state.comments[i].val().down){
-            return(!this.state.comments[i].val().down.includes(myID));
+            return(!down.list.includes(myID));
         }else{
             return(true);
         }
@@ -101,24 +101,25 @@ class StudentListing extends Component {
     comment(item,i){
         return(
             <div style={{height:100,border:"solid",borderColor:'#343f4b'}} key ={i}>
-                <Col lg={10} md={10} sm={10} xs={10} className='center' style={{height:'100%',fontSize:15}}>
-                    {item.val().comment}
+                <Col lg={8} md={8} sm={8} xs={8} className='center' style={{height:'100%',fontSize:15}}>
+                    <p>{item.val().comment}</p>
                 </Col>
-                <Col lg={4} md={4} sm={4} xs={4} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
+                <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
                     <Button onClick={()=>this.upvote(item)}
                             active={this.isActive(i)}
                             disabled={!this.isActive(i)}
                     >
                         <img src={require('./../../image/thumbs_up.png')} style={{width:40,height:40}}/>
-                        <p>{item.val().up?item.val().up.length:0}</p>
                     </Button>
                     <Button onClick={()=>this.downvote(item)}
                             active={this.isActive(i)}
                             disabled={!this.isActive(i)}
                     >
                         <img src={require('./../../image/thumbs_down.png')} style={{width:40,height:40}}/>
-                        <p>{item.val().down?item.val().down.length:0}</p>
                     </Button>
+                </Col>
+                <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:30,color:'#343f4b'}}>
+                    <p>Rating: {this.getRating(item)}</p>
                 </Col>
             </div>
         )
