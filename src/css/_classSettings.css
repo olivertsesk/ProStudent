@@ -2,6 +2,20 @@
  * Class Settings --------------------------------------------------------------
  */
 
+.settingswrapper {
+  padding: 30px;
+  color: #FFFFFF;
+  background: #3d99d4;
+  font-size: 1.3em;
+  font-family: helvetica;
+}
+
+.settings-table-wrapper {
+  width: 100%;
+  border: 2px solid #3d99d4;
+  border-radius: 10px;
+}
+
 .settings-table {
   margin: 50px auto;
   padding: 50px;
@@ -9,6 +23,7 @@
   width: 90%;
 
   outline: 4px solid #3d99d4;
+  border-radius: 10px;
   border-collapse: collapse;
   border-spacing: 0px;
 }
@@ -42,6 +57,14 @@
 
 .settings-table-cell.clickable:hover {
   background-color: #c0def1;
+}
+
+.close-button {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
 }
 
 /**
