@@ -80,7 +80,6 @@ class ClassSettings extends Component {
         })
 
         if (!isExisting) {
-          var idList = this.state.form.ids.split(",");
           firebase.database().ref('/classes/').push({
             professor:{
               UID:firebase.auth().currentUser.uid,
@@ -194,7 +193,7 @@ class ClassSettings extends Component {
     return (
       <div>
       {
-        this.state.mode != 0 ?
+        this.state.mode !== 0 ?
           <Panel style={{position:'absolute',
             top:this.state.height/8,
             left:this.state.width>1000?this.state.width/3:this.state.width/8,
@@ -234,7 +233,6 @@ class ClassSettings extends Component {
 
   //Not working yet
   commaSeparatedIDs(item){
-    var idList;
     var idString;
     firebase.database().ref('/classes/'+item.key).on('value',(snapshot) =>{
       var idList = item.val().course.listStudent;
