@@ -53,3 +53,33 @@
   text-align: center;
   color: #FFFFFF;
 }
+
+.feedbackwrapper {
+  height: 100%;
+  padding: 16px;
+  background: rgba(254, 254, 254, 0.8);
+}
+
+.feedbackInnerWrapper {
+  width: 100%;
+  padding: 10px;
+}
+
+.feedbackwrapper .title {
+  color: #3D99d4;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.feedbackline {
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+  justify-content: center;
+}
+
+.feedbackwrapper .loginbutton {
+  margin: 0 auto;
+  justify-content: center;
+}

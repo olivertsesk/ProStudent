@@ -66,6 +66,7 @@ body {
  */
 @import './css/_navbar.css';
 @import './css/_homepage.css';
+@import './css/_forms.css';
 @import './css/_landingPage.css';
 @import './css/_classListing.css';
 @import './css/_classSettings.css';
