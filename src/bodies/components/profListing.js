@@ -1,12 +1,12 @@
 /**
- * Created by jaewonlee on 2018. 2. 10..
+ * Created by jaewonlee on 2018. 2. 14..
  */
 
 import React, { Component } from 'react';
 import { Col } from 'react-bootstrap';
 import * as firebase from "firebase";
 
-class AdminListing extends Component {
+class ClassListing extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,8 +15,7 @@ class AdminListing extends Component {
       comments:[]
     };
 
-    this.comment = this.comment.bind(this);
-    this.deleteComment = this.deleteComment.bind(this);
+    this.comment = this.comment.bind(this)
   }
 
   changeColor() {
@@ -24,8 +23,7 @@ class AdminListing extends Component {
   }
 
   componentDidMount() {
-    firebase.database().ref('/classes/'+this.props.item.key+'/feedback').orderByChild("list").on('value',(snapshot) =>{
-      //console.log(snapshot.val())
+    firebase.database().ref('/classes/'+this.props.item.key+'/feedback').on('value',(snapshot) =>{
       var comments = this.state.comments;
       comments =[];
 
@@ -34,25 +32,16 @@ class AdminListing extends Component {
       });
 
       comments.sort((a, b)=>{
-        if(b.val().up && a.val().up && b.val().down && a.val().down) {
-          return ((b.val().up.length - b.val().down.length) - (a.val().up.length - a.val().down.length));
-        } else {
-          return null;
-        }
+        return (this.getRating(b)-this.getRating(a));
       });
 
-      this.setState({comments})
-      //console.log(comments + this.props.item.key)
+      this.setState({comments});
     })
   }
 
-  deleteComment(item) {
-    firebase.database().ref('/classes/'+this.props.item.key+'/feedback/'+item.key).remove(()=>alert('removed')).catch(()=>('failed'));
-  }
-
-  getRating(item) {
+  getRating(item){
     var rating = 0;
-    if (item.val().up && item.val().down){
+    if (item.val().up && item.val().down) {
       rating = item.val().up.list.length - item.val().down.list.length;
     } else if (item.val().up) {
       rating = item.val().up.list.length;
@@ -60,10 +49,10 @@ class AdminListing extends Component {
       rating = -item.val().down.list.length;
     }
 
-    return(rating);
+    return (rating);
   }
 
-  comment(item, i) {
+  comment(item,i){
     return(
       <div className="commentWrapper">
         <Col lg={2} md={2} sm={2} xs={2} className="center commentCol">
@@ -74,15 +63,6 @@ class AdminListing extends Component {
         </Col>
         <Col lg={2} md={2} sm={2} xs={2} className="center commentCol">
           <p className="rating">Rating: {this.getRating(item)}</p>
-        </Col>
-
-        <Col lg={1} md={1} sm={1} xs={1} className='center'>
-          <img src={require('./../../image/delete.svg')} alt="Del" style={{position:'absolute',top: 10, right : 10, width:10,height:10}} onClick={()=>{
-             var r = window.confirm("Are you sure?")
-             if (r) {
-               this.deleteComment(item,i);
-             }
-          }}/>
         </Col>
       </div>
     )
@@ -110,4 +90,4 @@ class AdminListing extends Component {
   }
 }
 
-export default AdminListing;
+export default ClassListing;
