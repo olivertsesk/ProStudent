@@ -82,7 +82,7 @@ class ProfLanding extends Component {
                         <Col lg={4} md={4} sm={4} xs={12} style={{height:'100%',padding:0}}>
                             <div className="center" style={{flexDirection:'column',height:"100%",width:(this.state.width-160)*1/3-90,marginLeft:80,}}>
                                 <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}>
-                                    Manage Account
+                                    <p style={{fontSize:30}}>Manage Account</p>
                                 </div>
                                 <br style={{height:"10%",width:'90%'}}/>
                                 <div className="center" style={{flexDirection:'column',height:"50%",width:'90%',borderColor:'#343f4b',borderRadius:10,border:'solid',background:'white'}}
