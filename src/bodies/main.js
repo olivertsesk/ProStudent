@@ -51,7 +51,6 @@ class Main extends Component {
                     firebase.auth().currentUser.updateProfile({
                         displayName: name
                     }).then(()=>{
-                        alert(name)
                     }).catch(function(error){
                         //error in changing displayname
                     })
@@ -278,7 +277,7 @@ class Main extends Component {
                                 />
                                 <br/>
                                 <ButtonGroup>
-                                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>{this.createID();alert(this.state.newUser.firstName);}}>
+                                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>{this.createID()}}>
                                         <p style={{color:'white'}}>Create Account</p>
                                     </Button>
                                     <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.setState({createAccount:false})}>

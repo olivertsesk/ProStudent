@@ -44,18 +44,18 @@ class ClassSettings extends Component {
     }
 
     componentDidMount() {
-        window.addEventListener('resize', this.resize)
-        this.setState({loading:true})
-
+        window.addEventListener('resize', this.resize);
+        this.setState({loading:true});
+        var classesTemp = [];
         if(!firebase.auth().currentUser||!firebase.auth().currentUser.uid||firebase.auth().currentUser===null||firebase.auth().currentUser===undefined){
             this.props.history.push('/');
         }else{
             firebase.database().ref('/classes').orderByChild('professor/UID').equalTo(firebase.auth().currentUser.uid).on('value',(snapshot)=>{
                 console.log(snapshot.val())
                 snapshot.forEach(item => {
-                    this.state.classes.push(item)
+                    classesTemp.push(item);
                 });
-                this.setState({loading:false})
+                this.setState({loading:false,classes:classesTemp});
                 this.forceUpdate();
             })
         }
