@@ -23,13 +23,10 @@ class Main extends Component {
             newAccount: false,
             login:{
                 email:"",
-                password:"",
-                employeeNo:"",
-            },
+                password:""},
             newUser:{
                 firstName:"",
-                lastName:"",
-            }
+                lastName:"",}
         };
         this.main = this.main.bind(this)
         this.panel = this.panel.bind(this)
@@ -43,22 +40,18 @@ class Main extends Component {
     componentWillMount(){
         firebase.auth().onAuthStateChanged((user)=>{
             if(user) {
-
                 if(!firebase.auth().currentUser.displayName){
                     var name = "";
-                    if(this.state.newAccount){
-                        //alert(this.state.newUser.firstName);
-                        //alert(this.state.newUser.lastName);
 
+                    if(this.state.newAccount){
                         name = "Professor " + this.state.newUser.firstName + " " + this.state.newUser.lastName;
                     }else{
                         name = firebase.auth().currentUser.email;
                     }
-
                     firebase.auth().currentUser.updateProfile({
                         displayName: name
                     }).then(()=>{
-                        //alert(name)
+                        alert(name)
                     }).catch(function(error){
                         //error in changing displayname
                     })
@@ -87,13 +80,6 @@ class Main extends Component {
     }
 
     handleButton(i){
-        /*firebase.database().ref('classes').orderByChild('course').orderByChild('code').equalTo(this.state.login.email).on("value", function(snapshot) {
-            console.log(snapshot.val());
-            snapshot.forEach(function(data) {
-                console.log(data.key);
-            });
-        });*/
-
         if(this.state.mode === 2){
             firebase.database().ref('classes/').orderByChild('course/code').equalTo(this.state.login.email).once("value").then((snapshot)=> {
                 console.log(snapshot.val())
@@ -102,7 +88,6 @@ class Main extends Component {
                 }
                 else{
                     snapshot.forEach(childSnapshot => {
-                        //console.log(childSnapshot.val().course)
                         for(var i = 0; i<childSnapshot.val().course.listStudent.length;i++){
                             if(this.state.login.password === childSnapshot.val().course.listStudent[i]){
                                 data.setID(this.state.login.password)
@@ -113,7 +98,6 @@ class Main extends Component {
                         }
                     });
                 }
-
             })
         }
         else{
@@ -275,12 +259,12 @@ class Main extends Component {
                                 <hr style={{color:"#B3b3b3",border:'solid',width:'90%',borderWidth:0.5}}/>
                                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>First Name</p>
                                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                                       onChange={(e)=> this.setState({newUser:{...this.state.firstName,firstName:e.target.value}})}
+                                       onChange={(e)=> this.setState({newUser:{...this.state.newUser,firstName:e.target.value}})}
                                 />
                                 <br/>
                                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Last Name</p>
                                 <input style={{width:'80%',border:'none',border:'solid',borderWidth:2,color:'black',borderColor:'#B3b3b3',fontSize:20,outline:'none',boxShadow:'none',borderRadius:5,padding:10}}
-                                       onChange={(e)=> this.setState({newUser:{...this.state.lastName,lastName:e.target.value}})}
+                                       onChange={(e)=> this.setState({newUser:{...this.state.newUser,lastName:e.target.value}})}
                                 />
                                 <br/>
                                 <p style={{padding:0,margin:0,lineHeight:1.3,fontSize:20,width:'80%',textAlign:'left'}}>Email</p>
@@ -294,7 +278,7 @@ class Main extends Component {
                                 />
                                 <br/>
                                 <ButtonGroup>
-                                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.createID()}>
+                                    <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>{this.createID();alert(this.state.newUser.firstName);}}>
                                         <p style={{color:'white'}}>Create Account</p>
                                     </Button>
                                     <Button bsSize="large" style={{background:"#3d99d4",width:this.state.width>1000?this.state.width/7:this.state.width/3}} onClick={()=>this.setState({createAccount:false})}>
