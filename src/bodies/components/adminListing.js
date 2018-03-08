@@ -1,120 +1,113 @@
 /**
  * Created by jaewonlee on 2018. 2. 10..
  */
-import React, { Component } from 'react';
-import{
-    Navbar,
-    Nav,
-    NavItem,
-    Col,
-    Panel
-} from 'react-bootstrap'
-import * as firebase from "firebase";
-import * as firebaseFunctions from "../../firebase";
 
-const comments = [1,2];
+import React, { Component } from 'react';
+import { Col } from 'react-bootstrap';
+import * as firebase from "firebase";
 
 class AdminListing extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showPanel:false,
-            color_blue: false,
-            comments:[]
-        };
-        this.comment = this.comment.bind(this)
-        this.deleteComment = this.deleteComment.bind(this)
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      showPanel:false,
+      color_blue: false,
+      comments:[]
+    };
 
-    changeColor(){
-        this.setState({color_blue: !this.state.color_blue})
-    }
+    this.comment = this.comment.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
+  }
 
-    componentDidMount(){
-        firebase.database().ref('/classes/'+this.props.item.key+'/feedback').orderByChild("list").on('value',(snapshot) =>{
-            console.log(snapshot.val())
-            var comments = this.state.comments;
-            comments =[];
+  changeColor() {
+    this.setState({color_blue: !this.state.color_blue});
+  }
 
-            snapshot.forEach(function(item) {
-                comments.push(item);
-            });
-            comments.sort((a,b)=>{
-                if(b.val().up&&a.val().up&&b.val().down&&a.val().down)
-                    return ((b.val().up.length - b.val().down.length) - (a.val().up.length - a.val().down.length));
-            });
-            this.setState({comments})
-            console.log(comments + this.props.item.key)
-        })
-    }
+  componentDidMount() {
+    firebase.database().ref('/classes/'+this.props.item.key+'/feedback').orderByChild("list").on('value',(snapshot) =>{
+      //console.log(snapshot.val())
+      var comments = this.state.comments;
+      comments =[];
 
-    deleteComment(item){
-        firebase.database().ref('/classes/'+this.props.item.key+'/feedback/'+item.key).remove(()=>alert('removed')).catch(()=>('failed'))
-    }
+      snapshot.forEach(function(item) {
+        comments.push(item);
+      });
 
-    getRating(item){
-        var rating = 0;
-        if (item.val().up && item.val().down){
-            rating = item.val().up.list.length - item.val().down.list.length;
-        }else if(item.val().up){
-            rating = item.val().up.list.length;
-        }else if(item.val().down){
-            rating = -item.val().down.list.length;
+      comments.sort((a, b)=>{
+        if(b.val().up && a.val().up && b.val().down && a.val().down) {
+          return ((b.val().up.length - b.val().down.length) - (a.val().up.length - a.val().down.length));
+        } else {
+          return null;
         }
+      });
 
-        return(rating);
+      this.setState({comments})
+      //console.log(comments + this.props.item.key)
+    })
+  }
+
+  deleteComment(item) {
+    firebase.database().ref('/classes/'+this.props.item.key+'/feedback/'+item.key).remove(()=>alert('removed')).catch(()=>('failed'));
+  }
+
+  getRating(item) {
+    var rating = 0;
+    if (item.val().up && item.val().down){
+      rating = item.val().up.list.length - item.val().down.list.length;
+    } else if (item.val().up) {
+      rating = item.val().up.list.length;
+    } else if (item.val().down) {
+      rating = -item.val().down.list.length;
     }
 
-    comment(item,i){
-        return(
-          <div style={{height:100,border:"solid",borderColor:'#343f4b'}}>
-              <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:15}}>
-                  {item.val().studentID?item.val().studentID:"ID Not Recorded"}
-              </Col>
-              <Col lg={7} md={7} sm={7} xs={7} className='center' style={{height:'100%',fontSize:15}}>
-                  {item.val().comment}
-              </Col>
-              <Col lg={2} md={2} sm={2} xs={2} className='center' style={{height:'100%',fontSize:20}}>
-                Rating: {this.getRating(item)}
-              </Col>
-              <Col lg={1} md={1} sm={1} xs={1} className='center' style={{height:'100%',fontSize:30}}>
-                  <img src={require('./../../image/delete.svg')} style={{position:'absolute',top: 10, right : 10, width:10,height:10}}
-                       onClick={()=>{
-                           var r = window.confirm("Are you sure?")
-                           if(r){
-                               this.deleteComment(item,i)
-                           }
-                       }}
-                  />
-              </Col>
-          </div>
-        )
-    }
+    return(rating);
+  }
 
-    render() {
-      let bgColor = this.state.color_blue ? "#3D99D4" : "white"
-        return (
+  comment(item, i) {
+    return(
+      <div className="commentWrapper">
+        <Col lg={2} md={2} sm={2} xs={2} className="center commentCol">
+          <p className="commentAuthor">{item.val().studentID ? item.val().studentID : "ID Not Recorded"}</p>
+        </Col>
+        <Col lg={7} md={7} sm={7} xs={7} className="center commentCol">
+          <p className="comment">{item.val().comment}</p>
+        </Col>
+        <Col lg={2} md={2} sm={2} xs={2} className="center commentCol">
+          <p className="rating">Rating: {this.getRating(item)}</p>
+        </Col>
+
+        <Col lg={1} md={1} sm={1} xs={1} className='center'>
+          <img src={require('./../../image/delete.svg')} alt="Del" style={{position:'absolute',top: 10, right : 10, width:10,height:10}} onClick={()=>{
+             var r = window.confirm("Are you sure?")
+             if (r) {
+               this.deleteComment(item,i);
+             }
+          }}/>
+        </Col>
+      </div>
+    )
+  }
+
+  render() {
+    let bgColor = this.state.color_blue ? "#3D99D4" : "#FFFFFF";
+    let fontColor = this.state.color_blue ? "#FFFFFF" : "#3D99D4";
+    return (
+      <div>
+        <div className="listing" style={{background: bgColor}} onClick={()=>this.setState({showPanel: !this.state.showPanel}, this.changeColor.bind(this))}>
+          <p className="listingTitle" style={{color: fontColor}}>{this.props.item.val().course.title}</p>
+          <p className="listingProf" style={{color: fontColor}}>{this.props.item.val().professor.name}</p>
+        </div>
+        {
+          this.state.showPanel ?
             <div>
-                <div style={{height:150,border:"solid",borderColor:'#343f4b', background: bgColor}} onClick={()=>this.setState({showPanel:!this.state.showPanel}, this.changeColor.bind(this))}>
-                    <Col lg={7} md={7} sm={7} xs={7} className='center' style={{height:'100%',fontSize:30}}>
-                        <p style={{width:'100%'}}>{this.props.item.val().course.title}</p>
-                    </Col>
-                    <Col lg={4} md={4} sm={4} xs={4} className='center' style={{height:'100%',fontSize:30}}>
-                        {this.props.item.val().professor.name}
-                    </Col>
-                </div>
-                {this.state.showPanel?
-                        <div>
-                          {
-                            this.state.comments.map((item,i)=>this.comment(item,i))
-                          }
-                        </div>
-                    :
-                    null
-                }
+              {this.state.comments.map((item,i)=>this.comment(item, i))}
             </div>
-        );
-    }
+          :
+            null
+        }
+      </div>
+    );
+  }
 }
 
 export default AdminListing;

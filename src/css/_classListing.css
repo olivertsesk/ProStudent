@@ -1,0 +1,69 @@
+/**
+ * Class Settings --------------------------------------------------------------
+ */
+
+.listing {
+  height: 150px;
+  border: 5px solid rgb(61, 153, 212);
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.listingTitle {
+  display: block;
+  width: 100%;
+  height: 60%;
+  padding: 16px;
+  color: rgb(61, 153, 212);
+  font-size: 2em;
+}
+
+.listingProf {
+  display: block;
+  width: 100%;
+  height: 30%;
+  padding: 16px;
+  color: rgb(61, 153, 212);
+  font-size: 1em;
+}
+
+.listingPanel {
+  display: block;
+  width: 100%;
+  height: 250px;
+  background: #FFFFFF;
+}
+
+.commentWrapper {
+  display: block;
+  width: 100%;
+  height: 125px;
+  border-radius: 10px;
+  background: rgba(254, 254, 254, 0.8);
+}
+
+.commentCol{
+  height: 100%;
+}
+
+.commentAuthor {
+  width: 100%;
+  height: 25%;
+  padding: 16px;
+  color: #47525e;
+  font-size: 0.8em;
+}
+
+.comment {
+  width: 100%;
+  height: 70%;
+  padding: 16px;
+  color: #47525e;
+  font-size: 1em;
+}
+
+.commentWrapper .rating {
+  color: #47525e;
+  text-align: center;
+  font-size: 1.3em;
+}

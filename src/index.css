@@ -57,9 +57,15 @@ body {
   cursor: pointer;
 }
 
+.scroll {
+  overflow-y: scroll;
+}
+
 /**
  * Import pages
  */
 @import './css/_navbar.css';
-@import './css/_classSettings.css';
 @import './css/_homepage.css';
+@import './css/_landingPage.css';
+@import './css/_classListing.css';
+@import './css/_classSettings.css';
