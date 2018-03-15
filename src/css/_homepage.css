@@ -1,0 +1,66 @@
+/**
+ * Homepage Styles -------------------------------------------------------------
+ */
+
+.homewrapper {
+  padding: 10px;
+  justify-content: center;
+}
+
+.homeheader * {
+  text-align: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.homeheader h1 {
+  margin-top: 20px;
+  color:#47525e;
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.homeheader h2 {
+  margin-top: 8px;
+  line-height: 1.7;
+  color:#47525e;
+  font-size: 1.5em;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.homeheader h3 {
+  color:#47525e;
+  font-size: 1.5em;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.loginwrapper {
+  width: 100%;
+  margin: 0;
+  padding: 48px 16px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  justify-content: center;
+  background: rgba(254, 254, 254, 0.8);
+}
+
+.loginwrapper h1 {
+  margin-top: 0;
+  text-align: center;
+  color:#47525e;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.loginbutton {
+  color: #FFFFFF;
+  background: #3d99d4;
+}
+
+.loginbutton:hover {
+  color: #FFFFFF;
+  background: #47525e;
+}

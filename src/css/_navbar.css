@@ -1,0 +1,27 @@
+/**
+ * Navbar Styles ---------------------------------------------------------------
+ */
+
+.navbar {
+  background: #3d99d4;
+  border-bottom: 3px solid #FFFFFF;
+  justify-content: center;
+}
+
+.brandmark {
+  color: #FFFFFF !important;
+  font-size: 2em;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.navitem {
+  padding: 2px 16px;
+  color: #FFFFFF;
+  border-radius: 5px;
+}
+
+.navitem:hover {
+  color: #47525e;
+  background: #FFFFFF;
+}

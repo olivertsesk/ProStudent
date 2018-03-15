@@ -1,0 +1,85 @@
+/**
+ * Universal Landing Page Classes ----------------------------------------------
+ */
+
+.landingPage {
+  width: 100%;
+  padding: 80px;
+}
+
+.landingPageHalfCol {
+  height: 100%;
+  padding: 0;
+}
+
+.classListWrapper {
+  height: 100%;
+  border-radius: 10px;
+  background-color: rgba(61, 153, 212, 0.4);
+}
+
+.rightSideWrapper {
+  height: 100%;
+  flex-direction: column !important;
+  margin-left: 80px;
+}
+
+.rightSideSpacer {
+  height: 10%;
+  width: 90%;
+}
+
+.rightSideButton {
+  width: 90%;
+  height: 50%;
+  padding: 16px;
+  flex-direction: column !important;
+  background-color: rgba(61, 153, 212, 0.95);
+  border-radius: 10px;
+  border: 5px solid rgb(61, 153, 212);
+  cursor: pointer;
+}
+
+.rightSideButton:hover {
+  background: #FFFFFF;
+}
+
+.rightSideButton:hover p {
+  color: rgb(61, 153, 212);
+}
+
+.rightSideButton p {
+  font-size: 1.25em;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.feedbackwrapper {
+  height: 100%;
+  padding: 16px;
+  background: rgba(254, 254, 254, 0.8);
+}
+
+.feedbackInnerWrapper {
+  width: 100%;
+  padding: 10px;
+}
+
+.feedbackwrapper .title {
+  color: #3D99d4;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.feedbackline {
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+  justify-content: center;
+}
+
+.feedbackwrapper .loginbutton {
+  margin: 0 auto;
+  justify-content: center;
+}
