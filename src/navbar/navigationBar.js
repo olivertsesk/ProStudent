@@ -50,7 +50,7 @@ class NavigationBar extends Component {
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav pullRight>
-                            <NavItem eventKey={1} href="#" onClick={()=>this.setState({about:true,contactus:false})} style={{color:"#47525e", fontWeight:"bold"}}>
+                            <NavItem eventKey={1} href="/about/" onClick={()=>this.setState({about:true,contactus:false})} style={{color:"#47525e", fontWeight:"bold"}}>
                                 <p style={{color:"black", fontWeight:"bold"}}>About</p>
                             </NavItem>
                             <NavItem eventKey={2} href="#" onClick={()=>this.setState({about:false,contactus:true})}>
