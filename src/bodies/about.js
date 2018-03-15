@@ -28,7 +28,7 @@ class About extends Component {
     main(){
         return(
             <div class='App' style={{zIndex:1,width:this.state.width}}>
-                <div style={{height:this.state.height/3,justifyContent:'center'}}>
+                <div style={{textAlign:'center'}}>
                     <h1 style={{fontSize:this.state.width>1000?this.state.width/20:18,fontWeight:600,color:"#47525e"}}>About Us</h1>
                 </div>
                 <div style={{height:this.state.height/13, textAlign:'left'}}>
