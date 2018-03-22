@@ -48,7 +48,7 @@ class NavigationBar extends Component {
               <NavItem eventKey={1} href="/about/" onClick={()=>this.setState({about: true, contactus: false})}>
                 <p className="navitem">About</p>
               </NavItem>
-              <NavItem eventKey={2} href="#" onClick={()=>this.setState({about: false, contactus: true})}>
+              <NavItem eventKey={2} href="/contact/" onClick={()=>this.setState({about: false, contactus: true})}>
                 <p className="navitem">Contact Us</p>
               </NavItem>
               {

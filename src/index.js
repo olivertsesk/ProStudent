@@ -18,6 +18,7 @@ import StudentLanding from './bodies/studentLanding'
 import ProfLanding from './bodies/professorLanding'
 import AdminLanding from './bodies/adminLanding'
 import About from './bodies/about'
+import Contact from './bodies/contact'
 
 const Redirection = () => (
   <Redirect to={"/main"}/>
@@ -38,6 +39,7 @@ ReactDOM.render(
         <Route exact path="/prof/*" component={ProfLanding} />
         <Route exact path="/admin/*" component={AdminLanding} />
         <Route exact path="/about/*" component={About}/>
+        <Route exact path="/contact/*" component={Contact}/>
         <Route path="/*" component={Redirection} />
       </Switch>
     </Router>
