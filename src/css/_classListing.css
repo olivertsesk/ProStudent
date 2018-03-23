@@ -92,3 +92,38 @@
 .bottomsep {
   border-bottom: 4px solid rgb(61, 153, 212);
 }
+.pollCol{
+  height: 100%;
+}
+.poll{
+  display: block;
+  width: 130%;
+  height: 50px;
+  border-radius: 10px;
+  background: #DC143C;
+  clear: both;
+}
+.pollQuestion {
+  display: block;
+  width: 100%;
+  height: 50%;
+  padding: 5px;
+  background: #DC143C;
+  font-size: 1em;
+}
+.pollAnswers {
+  display: block;
+  float: left;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background: #DC143C;
+  font-size: 1em;
+}
+.pollCount{
+  float: left;
+  height: 100%;
+  text-align: center;
+  font-size: 1.3em;
+  background: #DC143C;
+}
