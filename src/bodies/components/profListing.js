@@ -113,6 +113,7 @@ class ClassListing extends Component {
   }
   poll(item,i){
     return(
+    <div className="commentWrapper">
     <div className="poll">
       <Col lg={7} md={7} sm={7} xs={7} className="center pollCol">
         <h3 className="pollQuestion">{item.val().pollQuestion}</h3>
@@ -130,6 +131,7 @@ class ClassListing extends Component {
         <p className="pollAnswers">{item.val().ans2count}</p>
       </Col>
     </div>
+    </div>
   )
   }
   render() {
@@ -144,8 +146,8 @@ class ClassListing extends Component {
         {
           this.state.showPanel ?
             <div>
-              {this.state.polls.map((item,i)=>this.poll(item, i))}
               {this.state.comments.map((item,i)=>this.comment(item, i))}
+              {this.state.polls.map((item,i)=>this.poll(item, i))}
             </div>
           :
             null
