@@ -52,6 +52,38 @@ class ClassListing extends Component {
     return (rating);
   }
 
+  getPoll(){
+    var question, ans1, ans1count, ans2, ans2count;
+    var classes = firebase.database().ref('classes/'+this.props.item.key);
+    classes.on('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        if(childSnapshot.key === "poll") {
+          for (var i = 0; i < 5; i++) {
+            switch(Object.keys((Object.values(childSnapshot.val())[0]))[i]) {
+              case "ans1":
+                ans1 = Object.values((Object.values(childSnapshot.val())[0]))[i];
+                break;
+              case "ans1count":
+                ans1count = Object.values((Object.values(childSnapshot.val())[0]))[i];
+                break;
+              case "ans2":
+                ans2 = Object.values((Object.values(childSnapshot.val())[0]))[i];
+                break;
+              case "ans2count":
+                ans2count = Object.values((Object.values(childSnapshot.val())[0]))[i];
+                break;
+              case "pollQuestion":
+                question = Object.values((Object.values(childSnapshot.val())[0]))[i];
+                break;
+              default:
+                break;
+            }
+          }
+        }
+      });
+    });
+  }
+
   comment(item,i){
     return(
       <div className="commentWrapper">
