@@ -55,6 +55,7 @@ class ProfLanding extends Component {
     window.removeEventListener('resize', this.resize);
   }
 
+
   render() {
     if(this.state.loading) {
       return (<div>Loading</div>)
@@ -66,16 +67,20 @@ class ProfLanding extends Component {
             <ClassManager close={()=>this.setState({classManager: false})}/>
           :
             <div className="landingPage" style={{height:this.state.height-100}}>
-              <Col lg={8} md={8} sm={8} xs={12} className="landingPageHalfCol">
+              <Col lg={8} md={8} sm={8} xs={12} className="landingPageHalfCol">              
+                
                 <div className="classListWrapper scroll">
                 {
                   myClass.map((item,i)=>{
-                    return(
+                    return(      
                       <ClassList item ={item} key={i}/>
+                      
                     );
                   })
                 }
+                
                 </div>
+                
               </Col>
 
               <Col lg={4} md={4} sm={4} xs={12} className="landingPageHalfCol">
