@@ -12,7 +12,8 @@ class StudentListing extends Component {
     super(props);
     this.state = {
       showPanel:false,
-      comments : []
+      comments : [],
+      polls:[]
     };
 
     this.comment = this.comment.bind(this)
@@ -50,7 +51,14 @@ class StudentListing extends Component {
       this.setState({comments});
     })
 
-    // console.log(this.props)
+    firebase.database().ref('classes/' +data.getCourseID()+ '/poll').on('value',(snapshot) =>{
+      var polls = this.state.polls;
+      polls = [];
+      snapshot.forEach(function(item) {
+        polls.push(item);
+      });
+      this.setState({polls});
+    })
   }
 
   upvote(item){
@@ -125,6 +133,33 @@ class StudentListing extends Component {
       </div>
     )
   }
+  poll(item,i){
+      return(     
+      <form>
+      <div className="bottomsep commentWrapper" >
+      <div className="poll">
+        <Col lg={7} md={7} sm={7} xs={7} className="pollQuestion">
+          <h3 className="pollQuestion">{item.val().pollQuestion}</h3>
+        </Col>
+        <Col lg={7} md={7} sm={7} xs={7} className="center commentCol">
+          <p className="center comment">{item.val().ans1}</p>
+          <input type="radio" id="Choice1"name="poll" value={i}></input>
+        </Col>
+        <Col lg={2} md={2} sm={2} xs={2} className="center commentCol">
+          <p className="center comment">{item.val().ans1count}</p>
+        </Col>
+        <Col lg={7} md={7} sm={7} xs={7} className="center commentCol">
+          <p className="center comment">{item.val().ans2}</p>
+          <input type="radio" id="Choice1"name="poll" value={i}></input>
+        </Col>
+        <Col lg={2} md={2} sm={2} xs={2} className="center commentCol">
+          <p className="center comment">{item.val().ans2count}</p>
+        </Col>
+      </div>
+      </div>
+      </form>
+    )
+  }
 
   render() {
     return (
@@ -134,9 +169,8 @@ class StudentListing extends Component {
           <p className="listingTitle">{" "+this.props.item.course.title}</p>
         </div>
         <div>
-        {
-          this.state.comments.map((item,i)=>this.comment(item,i))
-        }
+        {this.state.polls.map((item,i)=>this.poll(item, i))}
+        {this.state.comments.map((item,i)=>this.comment(item,i))}
         </div>
       </div>
     );
