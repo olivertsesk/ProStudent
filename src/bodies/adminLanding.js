@@ -36,7 +36,8 @@ class AdminLanding extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
+      window.removeEventListener('resize', this.resize);
+      firebase.database().ref('/classes/').off();
   }
 
   render() {

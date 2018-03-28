@@ -60,6 +60,10 @@ class StudentListing extends Component {
       this.setState({polls});
     })
   }
+  componentWillUnmount(){
+      firebase.database().ref('/classes/'+data.getCourseID()+'/feedback').off();
+      firebase.database().ref('classes/' +data.getCourseID()+ '/poll').off();
+  }
 
   upvote(item){
     var up_list = [];
