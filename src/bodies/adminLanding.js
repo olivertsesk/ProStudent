@@ -42,7 +42,7 @@ class AdminLanding extends Component {
   render() {
     return (
       <div className="landingPage" style={{height:this.state.height-100}}>
-        <Col lg={8} md={8} sm={8} xs={12} className="landingPageHalfCol">
+        <Col lg={12} md={12} sm={12} xs={12} className="landingPageHalfCol">
           <div className="classListWrapper scroll">
           {
             this.state.classes.map((item,i)=>{
@@ -54,7 +54,14 @@ class AdminLanding extends Component {
           </div>
         </Col>
 
-        <Col lg={4} md={4} sm={4} xs={12} className="landingPageHalfCol">
+
+      </div>
+    );
+  }
+}
+
+/*
+<Col lg={4} md={4} sm={4} xs={12} className="landingPageHalfCol">
           <div className="center rightSideWrapper" style={{width:(this.state.width-160)*1/3-90}}>
             <div className="center rightSideButton">
               <p>Manage Professors</p>
@@ -67,9 +74,5 @@ class AdminLanding extends Component {
             </div>
           </div>
         </Col>
-      </div>
-    );
-  }
-}
-
+ */
  export default AdminLanding;
