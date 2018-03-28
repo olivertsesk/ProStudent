@@ -33,8 +33,13 @@ class About extends Component {
                 </div>
                 <div style={{height:this.state.height/13, textAlign:'left'}}>
                     <h1 style={{fontSize:this.state.width>1000?this.state.width/70:18,fontWeight:500,color:"#47525e",padding:0,marginLeft:100, marginRight: 100}}>
-                        ProStudent is an app that was created with students in mind. It allows students and professors to communicate in real time.
-                        Students can provide live feedback which allows professors to improve their lecture on the fly.
+                        <p>
+                            Welcome to ProStudent!
+                        </p>
+                        <p>
+                            Prostudent is an application which allows seemless real-time communication between students and Professors.
+                            The app was started by a group of McGill students as part of a design project, and has since continued to be developed and refined.
+                        </p>
                     </h1>
                 </div>
             </div>
