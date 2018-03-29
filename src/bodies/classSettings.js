@@ -6,7 +6,7 @@ import { ButtonGroup, Button, Panel } from 'react-bootstrap';
 import * as firebase from 'firebase'
 
 var fullListClasses = [];
-var object;
+//var object;
 
 class ClassSettings extends Component {
   constructor(props) {
@@ -23,19 +23,21 @@ class ClassSettings extends Component {
         ids:null
       },
       pollData: {
+        course:null,
         title:null,
         ans1:null,
         ans2:null,
+        ans3:null
       },
       classes:[],
-      selectedClass:null,
-      poll: 0
+      selectedClass:null
     };
 
     this.classDetail = this.classDetail.bind(this)
     this.panel = this.panel.bind(this)
     this.createClass = this.createClass.bind(this)
     this.createPoll = this.createPoll.bind(this)
+    this.pollPanel = this.pollPanel.bind(this)
   }
 
   resize = () => {
@@ -116,27 +118,6 @@ class ClassSettings extends Component {
     }
   }
 
-  createPoll() {
-    firebase.database().ref('classes/').once("value").then((snapshot)=> {
-      if (!snapshot.val()) {
-        alert("FAILED");
-      } else {
-        snapshot.forEach(childSnapshot => {
-          if (object.val().course.code === childSnapshot.val().course.code) {
-            firebase.database().ref('classes/' + childSnapshot.key + '/poll').push({
-              pollQuestion:this.state.pollData.title,ans1:this.state.pollData.ans1,ans2:this.state.pollData.ans2,ans1count:0,ans2count:0
-            }).then(()=>{
-              alert("Poll Created!");
-              this.setState({poll:0})
-            }).catch((e)=>{
-              alert(e);
-            });
-          }
-        });
-      }
-    });
-  }
-
   panel(mode, item) {
     var header = null;
     var titleTemp;
@@ -158,7 +139,7 @@ class ClassSettings extends Component {
       default:
         break;
     }
-
+    if(mode !== 3){
     return(
       <div className="center form" style={{flexDirection:'column'}}>
 
@@ -189,12 +170,17 @@ class ClassSettings extends Component {
           <Button bsSize="large" className="loginbutton" style={{width:this.state.width/3}} onClick={()=>this.createClass({mode})}>
             <p>{header}</p>
           </Button>
-          <Button bsSize="large" className="loginbutton" style={{width:this.state.width/3}} onClick={()=>this.setState({mode:0})}>
+          <Button bsSize="large" className="loginbutton" style={{width:this.state.width/3}} onClick={()=>this.setState({mode:0, selectedClass:null})}>
             <p>Cancel</p>
           </Button>
         </ButtonGroup>
       </div>
     )
+  }else{
+    return(
+      this.pollPanel(item)
+    )
+  }
   }
 
   classDetail(item){
@@ -204,11 +190,8 @@ class ClassSettings extends Component {
           <td className="settings-table-cell" style={{width:'20%'}}>{item.val().course.code}</td>
           <td className="settings-table-cell" style={{width:'70%'}}>{item.val().course.title}</td>
           <td className="settings-table-cell clickable" onClick={()=>this.openPortal(item)}>Access Code</td>
-          <td className="settings-table-cell clickable" onClick={()=>{this.setState({mode:2,selectedClass:item});}}>Edit</td>
-          <td className="settings-table-cell clickable" onClick={()=>{
-            this.flipPoll(item);
-            object = item;
-          }}>Create Poll</td>
+          <td className="settings-table-cell clickable" onClick={()=>{this.setState({mode:3, selectedClass:item});}}>Create Poll</td>
+          <td className="settings-table-cell clickable" onClick={()=>{this.setState({mode:2, selectedClass:item});}}>Edit</td>
           <td className="settings-table-cell clickable" onClick={()=>{
             var del = window.confirm("Are you sure you'd like to delete " + item.val().course.code +"?");
             if (del) {
@@ -253,31 +236,6 @@ class ClassSettings extends Component {
           }
         </div>
         <div>
-        {
-          this.state.poll === 1 ?
-            <div className ="modal-content">
-              <p className="formlabel">Poll Question</p>
-              <input className="forminput" style={{width:this.state.width/2}} onChange={(e)=> this.setState({pollData: {...this.state.pollData, title: e.target.value}})}/>
-
-              <br/><br/>
-
-              <p className="formlabel">Answer 1</p>
-              <input className="forminput" style={{width:this.state.width/2}} onChange={(e)=> this.setState({pollData: {...this.state.pollData, ans1: e.target.value}})}/>
-
-              <br/><br/>
-
-              <p className="formlabel">Answer 2</p>
-              <input className="forminput" style={{width:this.state.width/2}} onChange={(e)=> this.setState({pollData: {...this.state.pollData, ans2: e.target.value}})}/>
-              <br/><br/>
-
-              <Button bsSize="large" className="loginbutton" style={{width:this.state.width/2}} onClick={()=>{this.createPoll()}}>
-                <p>Create Poll</p>
-              </Button>
-            </div>
-          :
-            <p></p>
-
-        }
         </div>
       </div>
     );
@@ -285,6 +243,52 @@ class ClassSettings extends Component {
 
   openPortal(item){
     alert("Portal Access Code: " + item.val().course.code);
+  }
+
+  pollPanel(item){
+    //var courseCode = this.state.selectedClass.val().course;
+    return(
+      <div className="center form" style={{flexDirection:'column'}}>
+              <p className="title">Poll for {item.val().course.code}:</p>
+
+              <hr className="formseperator"/>
+
+              <p className="formlabel">Polling Question:</p>
+              <input className="forminput" onChange={(e)=> this.setState({pollData: {...this.state.pollData, title: e.target.value}})}/>
+              <br/>
+
+              <p className="formlabel">Choice 1:</p>
+              <input className="forminput"  onChange={(e)=> this.setState({pollData: {...this.state.pollData, ans1: e.target.value}})}/>
+              <br/>
+
+              <p className="formlabel">Choice 2:</p>
+              <input className="forminput"  onChange={(e)=> this.setState({pollData: {...this.state.pollData, ans2: e.target.value}})}/>
+              <br/>
+
+              <p className="formlabel">Choice 3:</p>
+              <input className="forminput"  onChange={(e)=> this.setState({pollData: {...this.state.pollData, ans3: e.target.value}})}/>
+              <br/>
+            <ButtonGroup>
+              <Button bsSize="large" className="loginbutton" style={{width:(this.state.width/3)}} onClick={()=>{this.createPoll(item)}}>
+                <p>Create Poll</p>
+              </Button>
+              <Button bsSize="large" className="loginbutton" style={{width:(this.state.width/3)}} onClick={()=>{this.setState({mode:0, selectedClass:null})}}>
+                <p>Cancel</p>
+              </Button>
+            </ButtonGroup>
+      </div>
+    )
+  }
+
+  createPoll(item) {
+    firebase.database().ref('classes/' + item.key + '/poll').push({
+      pollQuestion:this.state.pollData.title,ans1:this.state.pollData.ans1,ans2:this.state.pollData.ans2,ans3:this.state.pollData.ans3
+    }).catch((e) => {
+      alert(e);
+    }).then(()=>{
+      this.setState({mode:0, selectedClass:null});
+      alert("Poll added to " + item.val().course.code + "!");
+    })
   }
 
   //Doesn't remove classListing from UI yet...
@@ -309,16 +313,6 @@ class ClassSettings extends Component {
     return(idString);
   }
 
-  flipPoll(item) {
-    var newPoll;
-    if (this.state.poll === 1) {
-      newPoll = 0;
-    }
-    else {
-      newPoll = 1;
-    }
-    this.setState({poll:newPoll});
-  }
 }
 
 export default ClassSettings;
