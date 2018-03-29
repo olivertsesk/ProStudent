@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 import { Col } from 'react-bootstrap';
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 
 import ClassList from './components/adminListing';
 
@@ -23,6 +23,17 @@ class AdminLanding extends Component {
   }
 
   componentDidMount() {
+    const adminID = "stpX94g415buRPBTRLCl9jKnbbU2"
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (adminID != user.uid) {
+          this.props.history.push('/prof/');
+        }
+      } else {
+        this.props.history.push('/main');
+      }
+    });
+
     window.addEventListener('resize', this.resize);
     firebase.database().ref('/classes/').on('value',(snapshot) =>{
       var classes =[];
