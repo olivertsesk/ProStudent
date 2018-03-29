@@ -246,7 +246,6 @@ class ClassSettings extends Component {
   }
 
   pollPanel(item){
-    //var courseCode = this.state.selectedClass.val().course;
     return(
       <div className="center form" style={{flexDirection:'column'}}>
               <p className="title">Poll for {item.val().course.code}:</p>
@@ -281,8 +280,21 @@ class ClassSettings extends Component {
   }
 
   createPoll(item) {
-    firebase.database().ref('classes/' + item.key + '/poll').push({
-      pollQuestion:this.state.pollData.title,ans1:this.state.pollData.ans1,ans2:this.state.pollData.ans2,ans3:this.state.pollData.ans3
+    firebase.database().ref('classes/' + item.key + '/polls').push({
+          question:this.state.pollData.title,
+          date: Date.now(),
+          ans1:{
+            value: this.state.pollData.ans1,
+            responses: []
+          },
+          ans2:{
+            value: this.state.pollData.ans2,
+            responses: []
+          },
+          ans3:{
+            value: this.state.pollData.ans3,
+            responses: []
+      }
     }).catch((e) => {
       alert(e);
     }).then(()=>{

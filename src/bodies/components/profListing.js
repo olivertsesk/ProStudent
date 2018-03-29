@@ -41,7 +41,7 @@ class ClassListing extends Component {
     })
 //poll
 
-    firebase.database().ref('classes/' +this.props.item.key+ '/poll').on('value',(snapshot) =>{
+    firebase.database().ref('classes/' +this.props.item.key+ '/polls').on('value',(snapshot) =>{
       var polls = this.state.polls;
       polls = [];
       snapshot.forEach(function(item) {
@@ -64,7 +64,7 @@ class ClassListing extends Component {
     return (rating);
   }
 
-  getPoll(){
+  /*getPoll(){
     var question, ans1, ans1count, ans2, ans2count;
     var classes = firebase.database().ref('classes/'+this.props.item.key);
     classes.on('value', function(snapshot) {
@@ -94,7 +94,7 @@ class ClassListing extends Component {
         }
       });
     });
-  }
+  }*/
 
   comment(item,i){
     return(
@@ -111,29 +111,88 @@ class ClassListing extends Component {
       </div>
     )
   }
+
   poll(item,i){
-    return(
-    <div className="commentWrapper">
-    <div className="poll">
-      <Col lg={7} md={7} sm={7} xs={7} className="center pollCol">
-        <h3 className="pollQuestion">{item.val().pollQuestion}</h3>
+    return(     
+      <div className="bottomsep commentWrapper" key ={i}>
+      <Col lg={2} md={2} sm={2} xs={2} className="center commentCol">
+        <p className="center commentType">Professor Poll</p>
       </Col>
-      <Col lg={7} md={7} sm={7} xs={7} className="center pollCol">
-        <p className="pollAnswers">{item.val().ans1}</p>
+      <Col lg={5} md={5} sm={5} xs={5} className="center commentCol">
+        <p className="center comment">{item.val().question}</p>
       </Col>
-      <Col lg={2} md={2} sm={2} xs={2} className="center pollCol">
-        <p className="pollAnswers">{item.val().ans1count}</p>
-      </Col>
-      <Col lg={7} md={7} sm={7} xs={7} className="center pollCol">
-        <p className="pollAnswers">{item.val().ans2}</p>
-      </Col>
-      <Col lg={2} md={2} sm={2} xs={2} className="center pollCol">
-        <p className="pollAnswers">{item.val().ans2count}</p>
+      <Col lg={5} md={5} sm={5} xs={5} className="center commentCol">
+        <form className="form-group">
+        <div>
+        <p>
+          <input type="radio" value="option1"  disabled= {true}/>
+          {item.val().ans1.value}   [Selections : {item.val().ans1.responses ? item.val().ans1.responses.length : 0}, {this.getPercentResponse(item, 1)}%]
+        </p>
+        </div>
+        <div>
+        <p>
+          <input type="radio" value="option2"  disabled= {true}/>
+          {item.val().ans2.value}   [Selections : {item.val().ans2.responses ? item.val().ans2.responses.length : 0}, {this.getPercentResponse(item, 2)}%]
+        </p>
+        </div>
+        <div>
+        <p>
+          <input type="radio" value="option3"  disabled= {true} />
+          {item.val().ans3.value}   [Selections : {item.val().ans3.responses ? item.val().ans3.responses.length : 0}, {this.getPercentResponse(item, 3)}%]
+        </p>
+        </div>
+        </form>
       </Col>
     </div>
-    </div>
+
   )
   }
+
+  getTotalResponses(item){
+    var numResponses = 0;
+
+    if(item.val().ans1.responses){
+      numResponses += item.val().ans1.responses.length;
+    }
+
+    if(item.val().ans2.responses){
+      numResponses += item.val().ans2.responses.length;
+    }
+
+    if(item.val().ans3.responses){
+      numResponses += item.val().ans3.responses.length;
+    }
+
+    return(numResponses)
+  }
+
+  getPercentResponse(item, i){
+    var total = this.getTotalResponses(item);
+    var answerTotal = 0;
+    switch (i){
+      case 1:
+        if(item.val().ans1.responses){
+          answerTotal = item.val().ans1.responses.length;
+        }
+      break;
+      case 2:
+        if(item.val().ans2.responses){
+         answerTotal = item.val().ans2.responses.length;
+        }
+      break;
+      case 3:
+        if(item.val().ans3.responses){
+          answerTotal = item.val().ans3.responses.length;
+        }
+      break;
+      default:
+      break;
+    }
+
+    return(((answerTotal/total)*100).toFixed(2))
+
+  }
+
   render() {
     let bgColor = this.state.color_blue ? "#3D99D4" : "#FFFFFF";
     let fontColor = this.state.color_blue ? "#FFFFFF" : "#3D99D4";
