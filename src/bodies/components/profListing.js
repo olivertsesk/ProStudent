@@ -100,7 +100,7 @@ class ClassListing extends Component {
     return(
       <div className="commentWrapper">
         <Col lg={2} md={2} sm={2} xs={2} className="center commentCol">
-          <p className="commentAuthor">{item.val().studentID ? item.val().studentID : "ID Not Recorded"}</p>
+          <p className="commentAuthor">{item.val().tag ? item.val().tag : ""}</p>
         </Col>
         <Col lg={7} md={7} sm={7} xs={7} className="center commentCol">
           <p className="comment">{item.val().comment}</p>
