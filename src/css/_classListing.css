@@ -98,7 +98,7 @@
 .poll{
   display: block;
   width: 130%;
-  height: 50px;
+  overflow-y: scroll;
   border-radius: 10px;
   clear: both;
 }
