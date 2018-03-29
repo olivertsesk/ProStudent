@@ -53,7 +53,7 @@ class ProfLanding extends Component {
 
   componentWillUnmount() {
       window.removeEventListener('resize', this.resize);
-      firebase.database().ref('/classes').orderByChild('professor/UID').equalTo(firebase.auth().currentUser.uid).off();
+      firebase.database().ref('/classes').off();
   }
 
 
