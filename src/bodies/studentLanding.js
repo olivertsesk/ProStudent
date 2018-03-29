@@ -27,6 +27,7 @@ class StudentLanding extends Component {
       studentID:null,
       courseInfo:null,
       currentTag:"Other",
+        filterTag: null,
     };
   }
 
@@ -100,7 +101,7 @@ class StudentLanding extends Component {
 
         </div>
         <div>
-          <CommentList item={this.state.courseInfo}/>
+          <CommentList item={this.state.courseInfo} tag ={this.state.filterTag}/>
         </div>
       </Col>
     </div>
