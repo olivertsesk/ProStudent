@@ -60,7 +60,7 @@ class ProfLanding extends Component {
 
   render() {
     if(this.state.loading) {
-      return (<div>Loading</div>)
+      return (<div>Loading...</div>)
     } else {
       return (
         <div>
@@ -87,15 +87,11 @@ class ProfLanding extends Component {
 
               <Col lg={4} md={4} sm={4} xs={12} className="landingPageHalfCol">
                 <div className="center rightSideWrapper" style={{width:(this.state.width-160)*1/3-90}}>
-                  <div className="center rightSideButton">
-                    <p>Manage Professors</p>
-                  </div>
-
-                  <br className="rightSideSpacer"/>
 
                   <div className="center rightSideButton" onClick={()=>this.setState({classManager:true})}>
                     <p>Manage Classes</p>
                   </div>
+                  
                 </div>
               </Col>
             </div>
