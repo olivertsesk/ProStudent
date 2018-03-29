@@ -7,7 +7,9 @@ import{
     Nav,
     NavItem,
     Col,
-    Panel
+    Panel,
+    DropdownButton,
+    MenuItem
 } from 'react-bootstrap'
 import * as firebase from "firebase";
 
@@ -20,7 +22,8 @@ class AdminListing extends Component {
             showPanel:false,
             color_blue: false,
             comments:[],
-            polls:[]
+            polls:[],
+            filter : null,
         };
         this.comment = this.comment.bind(this)
     }
@@ -68,7 +71,9 @@ class AdminListing extends Component {
     }
 
     comment(item,i){
-        return(
+        if(this.state.filter ==null || this.state.filter == item.val().tag)
+
+            return(
             <div className="bottomsep commentWrapper" key ={i}>
                 <Col lg={2} md={2} sm={2} xs={2} className="center commentCol">
                     <p className="center commentType">{item.val().tag?item.val().tag:"No Tag"}</p>
@@ -165,12 +170,30 @@ class AdminListing extends Component {
         return(((answerTotal/total)*100).toFixed(2))
 
       }
-
+    setTag(tag){
+        this.setState({filter:tag});
+    }
     render() {
       let bgColor = this.state.color_blue ? "#3D99D4" : "white"
         return (
 
                 <div style ={{background:"white",borderRadius : 8}}>
+                    <div style={{display:"flex",flexDirection:"row"}}>
+                        <p style={{color:"#3D99D4", fontSize: "1em"}}>Filter :&nbsp;</p>
+                        <DropdownButton title={this.state.filter} id="dropdown-size-large" className="formselector">
+                            <MenuItem eventKey="1" value="Question" onSelect={()=>this.setTag("Question")}>Question</MenuItem>
+                            <MenuItem divider />
+                            <MenuItem eventKey="2" value="Suggestion" onSelect={()=>this.setTag("Suggestion")}>Suggestion</MenuItem>
+                            <MenuItem divider />
+                            <MenuItem eventKey="3" value="Compliment" onSelect={()=>this.setTag("Compliment")}>Compliment</MenuItem>
+                            <MenuItem divider />
+                            <MenuItem eventKey="4" value="Complaint" onSelect={()=>this.setTag("Complaint")}>Complaint</MenuItem>
+                            <MenuItem divider />
+                            <MenuItem eventKey="5" value="Other" onSelect={()=>this.setTag("Other")}>Other</MenuItem>
+                            <MenuItem divider />
+                            <MenuItem eventKey="6" value="Remove filter" onSelect={()=>this.setTag(null)}>Remove filter</MenuItem>
+                        </DropdownButton>
+                    </div>
                     <div className="listing" onClick={()=>this.setState({showPanel:!this.state.showPanel})}>
                         <p className="listingProf">{this.props.item.val().course.code}</p>
                         <p className="listingTitle">{" "+this.props.item.val().course.title}</p>
