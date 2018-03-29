@@ -53,7 +53,8 @@ class ProfLanding extends Component {
 
   componentWillUnmount() {
       window.removeEventListener('resize', this.resize);
-      firebase.database().ref('/classes').off();
+      myClass=[];
+      firebase.database().ref('/classes').off;
   }
 
 
