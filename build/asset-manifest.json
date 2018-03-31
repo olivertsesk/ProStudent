@@ -1,10 +1,11 @@
 {
-  "main.css": "static/css/main.5392af14.css",
-  "main.css.map": "static/css/main.5392af14.css.map",
-  "main.js": "static/js/main.b41af445.js",
-  "main.js.map": "static/js/main.b41af445.js.map",
-  "static\\media\\delete.svg": "static/media/delete.abb8a771.svg",
-  "static\\media\\mainbg.jpeg": "static/media/mainbg.32e0360d.jpeg",
-  "static\\media\\thumbs_down.png": "static/media/thumbs_down.f415be14.png",
-  "static\\media\\thumbs_up.png": "static/media/thumbs_up.7e97d77d.png"
+  "main.css": "static/css/main.021d5620.css",
+  "main.css.map": "static/css/main.021d5620.css.map",
+  "main.js": "static/js/main.d1626565.js",
+  "main.js.map": "static/js/main.d1626565.js.map",
+  "static/media/TrottierMap.png": "static/media/TrottierMap.475d0200.png",
+  "static/media/delete.svg": "static/media/delete.abb8a771.svg",
+  "static/media/mainbg.jpeg": "static/media/mainbg.32e0360d.jpeg",
+  "static/media/thumbs_down.png": "static/media/thumbs_down.f415be14.png",
+  "static/media/thumbs_up.png": "static/media/thumbs_up.7e97d77d.png"
 }
