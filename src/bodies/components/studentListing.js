@@ -270,21 +270,21 @@ class StudentListing extends Component {
           <p>
             <input type="radio" value="option1" active={!this.hasResponded(item)} disabled= {this.hasResponded(item)} 
               onClick={()=>this.choosePollResponse(item, 1)}/>
-            {item.val().ans1.value}   [Selections : {item.val().ans1.responses ? item.val().ans1.responses.length : 0}, {this.getPercentResponse(item, 1)}%]
+            {item.val().ans1.value}   [Selections : {item.val().ans1.responses ? item.val().ans1.responses.length : 0}, {item.val().ans1.responses ?this.getPercentResponse(item, 1):0}%]
           </p>
           </div>
           <div>
           <p>
             <input type="radio" value="option2" active={!this.hasResponded(item)} disabled= {this.hasResponded(item)} 
               onClick={()=>this.choosePollResponse(item, 2)}/>
-            {item.val().ans2.value}   [Selections : {item.val().ans2.responses ? item.val().ans2.responses.length : 0}, {this.getPercentResponse(item, 2)}%]
+            {item.val().ans2.value}   [Selections : {item.val().ans2.responses ? item.val().ans2.responses.length : 0}, {item.val().ans2.responses ?this.getPercentResponse(item, 2):0}%]
           </p>
           </div>
           <div>
           <p>
             <input type="radio" value="option3" active={!this.hasResponded(item)} disabled= {this.hasResponded(item)} 
               onClick={()=>this.choosePollResponse(item, 3)}/>
-            {item.val().ans3.value}   [Selections : {item.val().ans3.responses ? item.val().ans3.responses.length : 0}, {this.getPercentResponse(item, 3)}%]
+            {item.val().ans3.value}   [Selections : {item.val().ans3.responses ? item.val().ans3.responses.length : 0}, {item.val().ans3.responses ?this.getPercentResponse(item, 3):0}%]
           </p>
           </div>
           </form>
